@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>f108-pro</title>
+<h1>f108-pro</h1>
+<pre id="box">cargando…</pre>
+<script>
+const box = document.getElementById("box");
+const t = new URLSearchParams(location.search).get("t");
+if (!t) {
+  box.textContent = "Falta el token: abre la URL completa que imprime el programa (con ?t=...).";
+} else {
+  fetch("/api/keys", { headers: { "X-Token": t } })
+    .then(r => {
+      if (!r.ok) throw new Error(r.status + " " + r.statusText);
+      return r.json();
+    })
+    .then(k => {
+      box.textContent = k.length + " teclas\n" +
+        k.slice(0, 10).map(x => x.name + " → " + x.index).join("\n");
+    })
+    .catch(e => { box.textContent = "Error: " + e.message; });
+}
+</script>
