@@ -13,3 +13,7 @@ func (d *WirelessDevice) Close() error                           { return nil }
 func (d *WirelessDevice) SetKeyRemap(_ []KeyRemap, _ bool) error { return errWirelessUnsupported }
 
 func (d *WirelessDevice) ResetKeys(_ []uint8, _ bool) error { return errWirelessUnsupported }
+
+var ErrNoACK = errors.New("sin ACK del teclado")
+
+func (d *WirelessDevice) SetLighting(_ LightingConfig) error { return errWirelessUnsupported }

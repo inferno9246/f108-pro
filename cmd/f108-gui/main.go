@@ -11,7 +11,10 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os/exec"
+	"runtime"
 	"sort"
+	"strings"
 
 	"github.com/parsiya/f108-pro/pkg/aula"
 )
@@ -32,7 +35,10 @@ func main() {
 	}
 	token := hex.EncodeToString(raw)
 
-	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	ln, err := net.Listen("tcp", "127.0.0.1:47108")
+	if err != nil {
+		ln, err = net.Listen("tcp", "127.0.0.1:0")
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,6 +60,7 @@ func main() {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(keys)
 	})
+	mux.HandleFunc("/api/invoke", handleInvoke)
 
 	// Protección contra DNS rebinding y CSRF: host exacto y token en /api.
 	guarded := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -61,15 +68,17 @@ func main() {
 			http.Error(w, "forbidden", http.StatusForbidden)
 			return
 		}
-		if len(r.URL.Path) >= 5 && r.URL.Path[:5] == "/api/" {
-			if subtle.ConstantTimeCompare([]byte(r.Header.Get("X-Token")), []byte(token)) != 1 {
-				http.Error(w, "unauthorized", http.StatusUnauthorized)
-				return
-			}
+		if strings.HasPrefix(r.URL.Path, "/api/") &&
+			subtle.ConstantTimeCompare([]byte(r.Header.Get("X-Token")), []byte(token)) != 1 {
+			http.Error(w, "unauthorized", http.StatusUnauthorized)
+			return
 		}
 		mux.ServeHTTP(w, r)
 	})
-
-	fmt.Printf("Abre: http://%s/?t=%s\n", addr, token)
+	url := fmt.Sprintf("http://%s/?t=%s", addr, token)
+	fmt.Println("Abre:", url)
+	if runtime.GOOS == "linux" {
+		go exec.Command("xdg-open", url).Start()
+	}
 	log.Fatal(http.Serve(ln, guarded))
 }

@@ -38,41 +38,6 @@ func OpenWireless() (*WirelessDevice, error) {
 
 func (d *WirelessDevice) Close() error { return d.f.Close() }
 
-func (d *WirelessDevice) send(payload []byte) error {
-	var pkt [33]byte // [0]=report ID, [1..31]=payload, [32]=checksum
-	copy(pkt[1:32], payload)
-	var sum byte
-	for _, b := range pkt[:32] {
-		sum += b
-	}
-	pkt[32] = sum
-
-	buf := make([]byte, 64)
-	for { // vaciar reportes pendientes
-		d.f.SetReadDeadline(time.Now().Add(time.Millisecond))
-		if _, err := d.f.Read(buf); err != nil {
-			break
-		}
-	}
-	var err error
-	for try := 0; try < 2; try++ { // el driver original reintenta una vez
-		if _, err = d.f.Write(pkt[:]); err == nil {
-			break
-		}
-		time.Sleep(10 * time.Millisecond)
-	}
-	if err != nil {
-		return err
-	}
-	for end := time.Now().Add(300 * time.Millisecond); time.Now().Before(end); {
-		d.f.SetReadDeadline(time.Now().Add(20 * time.Millisecond))
-		if n, err := d.f.Read(buf); err == nil && n >= 3 && bytes.Equal(buf[:3], pkt[1:4]) {
-			return nil
-		}
-	}
-	return errors.New("sin ACK del teclado")
-}
-
 // SetKeyRemap envía un paquete por tecla. A diferencia del USB, las teclas
 // que no están en la lista NO se tocan.
 func (d *WirelessDevice) SetKeyRemap(remaps []KeyRemap, fn bool) error {
@@ -136,4 +101,67 @@ func (d *WirelessDevice) ResetKeys(indices []uint8, fn bool) error {
 		time.Sleep(10 * time.Millisecond)
 	}
 	return nil
+}
+
+// ErrNoACK indica que el paquete se escribió pero el teclado no lo confirmó a tiempo.
+// El comando puede haberse aplicado igualmente: un teclado 2.4G en reposo responde tarde.
+var ErrNoACK = errors.New("sin ACK del teclado")
+
+func (d *WirelessDevice) send(payload []byte) error {
+	var pkt [33]byte // [0]=report ID, [1..31]=payload, [32]=checksum
+	copy(pkt[1:32], payload)
+	var sum byte
+	for _, b := range pkt[:32] {
+		sum += b
+	}
+	pkt[32] = sum
+
+	buf := make([]byte, 64)
+	for { // vaciar reportes pendientes (una sola vez, antes del primer envío)
+		d.f.SetReadDeadline(time.Now().Add(time.Millisecond))
+		if _, err := d.f.Read(buf); err != nil {
+			break
+		}
+	}
+	for attempt := 0; attempt < 3; attempt++ {
+		var err error
+		for try := 0; try < 2; try++ { // el driver original reintenta una vez
+			if _, err = d.f.Write(pkt[:]); err == nil {
+				break
+			}
+			time.Sleep(10 * time.Millisecond)
+		}
+		if err != nil {
+			return err
+		}
+		// Un ACK tardío del envío anterior también vale: lleva la misma cabecera.
+		for end := time.Now().Add(700 * time.Millisecond); time.Now().Before(end); {
+			d.f.SetReadDeadline(time.Now().Add(20 * time.Millisecond))
+			if n, err := d.f.Read(buf); err == nil && n >= 3 && bytes.Equal(buf[:3], pkt[1:4]) {
+				return nil
+			}
+		}
+	}
+	return ErrNoACK
+}
+
+// SetLighting envía el paquete de iluminación global (05 10) por el dongle 2.4G.
+// Offsets del payload (el offset 0 del paquete es el report ID):
+// 3 modo, 4-6 RGB, 11 multicolor, 12 brillo, 13 velocidad, 14 dirección, 17-18 AA 55.
+func (d *WirelessDevice) SetLighting(cfg LightingConfig) error {
+	if cfg.Mode < 0 || cfg.Mode > 19 {
+		return fmt.Errorf("invalid mode %d (valid range: 0-19)", cfg.Mode)
+	}
+	if cfg.Brightness > 5 || cfg.Speed > 5 || cfg.Direction > 1 {
+		return fmt.Errorf("brightness and speed must be 0-5, direction 0-1")
+	}
+	colorful := byte(0)
+	if cfg.Colorful {
+		colorful = 1
+	}
+	return d.send([]byte{
+		0x05, 0x10, 0x00, byte(cfg.Mode), cfg.R, cfg.G, cfg.B,
+		0, 0, 0, 0, colorful, cfg.Brightness, cfg.Speed, cfg.Direction,
+		0, 0, 0xAA, 0x55,
+	})
 }

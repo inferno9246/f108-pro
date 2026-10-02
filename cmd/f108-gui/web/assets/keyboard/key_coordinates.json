@@ -1,0 +1,1777 @@
+{
+  "canvas": {
+    "width": 800,
+    "height": 300,
+    "image": "img_keyboard_layout.png"
+  },
+  "keys": [
+    {
+      "id": "ESC",
+      "cli_name": "ESC",
+      "label": "Esc",
+      "desc": "Esc",
+      "code": "0x29",
+      "key_index": 1,
+      "light_index": 1,
+      "rect": {
+        "x": 27,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#0",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F1",
+      "cli_name": "F1",
+      "label": "F1",
+      "desc": "F1",
+      "code": "0x3a",
+      "key_index": 2,
+      "light_index": 2,
+      "rect": {
+        "x": 95,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#2",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F2",
+      "cli_name": "F2",
+      "label": "F2",
+      "desc": "F2",
+      "code": "0x3b",
+      "key_index": 3,
+      "light_index": 3,
+      "rect": {
+        "x": 129,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#3",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F3",
+      "cli_name": "F3",
+      "label": "F3",
+      "desc": "F3",
+      "code": "0x3c",
+      "key_index": 4,
+      "light_index": 4,
+      "rect": {
+        "x": 162,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#4",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F4",
+      "cli_name": "F4",
+      "label": "F4",
+      "desc": "F4",
+      "code": "0x3d",
+      "key_index": 5,
+      "light_index": 5,
+      "rect": {
+        "x": 196,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#5",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F5",
+      "cli_name": "F5",
+      "label": "F5",
+      "desc": "F5",
+      "code": "0x3e",
+      "key_index": 6,
+      "light_index": 6,
+      "rect": {
+        "x": 246,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#6",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F6",
+      "cli_name": "F6",
+      "label": "F6",
+      "desc": "F6",
+      "code": "0x3f",
+      "key_index": 7,
+      "light_index": 7,
+      "rect": {
+        "x": 280,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#7",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F7",
+      "cli_name": "F7",
+      "label": "F7",
+      "desc": "F7",
+      "code": "0x40",
+      "key_index": 8,
+      "light_index": 8,
+      "rect": {
+        "x": 314,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#8",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F8",
+      "cli_name": "F8",
+      "label": "F8",
+      "desc": "F8",
+      "code": "0x41",
+      "key_index": 9,
+      "light_index": 9,
+      "rect": {
+        "x": 348,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#9",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F9",
+      "cli_name": "F9",
+      "label": "F9",
+      "desc": "F9",
+      "code": "0x42",
+      "key_index": 10,
+      "light_index": 10,
+      "rect": {
+        "x": 398,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#10",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F10",
+      "cli_name": "F10",
+      "label": "F10",
+      "desc": "F10",
+      "code": "0x43",
+      "key_index": 11,
+      "light_index": 11,
+      "rect": {
+        "x": 432,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#11",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F11",
+      "cli_name": "F11",
+      "label": "F11",
+      "desc": "F11",
+      "code": "0x44",
+      "key_index": 12,
+      "light_index": 12,
+      "rect": {
+        "x": 465,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#12",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F12",
+      "cli_name": "F12",
+      "label": "F12",
+      "desc": "F12",
+      "code": "0x45",
+      "key_index": 13,
+      "light_index": 13,
+      "rect": {
+        "x": 499,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#13",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "PRINT",
+      "cli_name": "PRINT",
+      "label": "PRINT",
+      "desc": "PRINT",
+      "code": "0x46",
+      "key_index": 112,
+      "light_index": 112,
+      "rect": {
+        "x": 539,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#14",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "SCROLL",
+      "cli_name": "SCROLL",
+      "label": "SCROOL",
+      "desc": "SCROOL",
+      "code": "0x47",
+      "key_index": 113,
+      "light_index": 113,
+      "rect": {
+        "x": 572,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#15",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "PAUSE",
+      "cli_name": "PAUSE",
+      "label": "pause",
+      "desc": "pause",
+      "code": "0x48",
+      "key_index": 115,
+      "light_index": 115,
+      "rect": {
+        "x": 606,
+        "y": 52,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "0#16",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "GRAVE",
+      "cli_name": "GRAVE",
+      "label": "~`",
+      "desc": "~`",
+      "code": "0x35",
+      "key_index": 19,
+      "light_index": 19,
+      "rect": {
+        "x": 27,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#0",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "1",
+      "cli_name": "1",
+      "label": "!1",
+      "desc": "!1",
+      "code": "0x1e",
+      "key_index": 20,
+      "light_index": 20,
+      "rect": {
+        "x": 61,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#1",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "2",
+      "cli_name": "2",
+      "label": "@2",
+      "desc": "@2",
+      "code": "0x1f",
+      "key_index": 21,
+      "light_index": 21,
+      "rect": {
+        "x": 95,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#2",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "3",
+      "cli_name": "3",
+      "label": "#3",
+      "desc": "#3",
+      "code": "0x20",
+      "key_index": 22,
+      "light_index": 22,
+      "rect": {
+        "x": 129,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#3",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "4",
+      "cli_name": "4",
+      "label": "$4",
+      "desc": "$4",
+      "code": "0x21",
+      "key_index": 23,
+      "light_index": 23,
+      "rect": {
+        "x": 163,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#4",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "5",
+      "cli_name": "5",
+      "label": "%5",
+      "desc": "%5",
+      "code": "0x22",
+      "key_index": 24,
+      "light_index": 24,
+      "rect": {
+        "x": 196,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#5",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "6",
+      "cli_name": "6",
+      "label": "^6",
+      "desc": "^6",
+      "code": "0x23",
+      "key_index": 25,
+      "light_index": 25,
+      "rect": {
+        "x": 230,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#6",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "7",
+      "cli_name": "7",
+      "label": "&7",
+      "desc": "&7",
+      "code": "0x24",
+      "key_index": 26,
+      "light_index": 26,
+      "rect": {
+        "x": 263,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#7",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "8",
+      "cli_name": "8",
+      "label": "*8",
+      "desc": "*8",
+      "code": "0x25",
+      "key_index": 27,
+      "light_index": 27,
+      "rect": {
+        "x": 297,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#8",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "9",
+      "cli_name": "9",
+      "label": "(9",
+      "desc": "(9",
+      "code": "0x26",
+      "key_index": 28,
+      "light_index": 28,
+      "rect": {
+        "x": 330,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#9",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "0",
+      "cli_name": "0",
+      "label": ")0",
+      "desc": ")0",
+      "code": "0x27",
+      "key_index": 29,
+      "light_index": 29,
+      "rect": {
+        "x": 364,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#10",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "MINUS",
+      "cli_name": "MINUS",
+      "label": "_-",
+      "desc": "_-",
+      "code": "0x2d",
+      "key_index": 30,
+      "light_index": 30,
+      "rect": {
+        "x": 398,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#11",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "EQUALS",
+      "cli_name": "EQUALS",
+      "label": "+=",
+      "desc": "+=",
+      "code": "0x2e",
+      "key_index": 31,
+      "light_index": 31,
+      "rect": {
+        "x": 432,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#12",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "BACKSPACE",
+      "cli_name": "BACKSPACE",
+      "label": "Backspace",
+      "desc": "Backspace",
+      "code": "0x2a",
+      "key_index": 103,
+      "light_index": 103,
+      "rect": {
+        "x": 465,
+        "y": 91,
+        "w": 60,
+        "h": 26
+      },
+      "row_col": "1#13",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "INSERT",
+      "cli_name": "INSERT",
+      "label": "insert",
+      "desc": "insert",
+      "code": "0x49",
+      "key_index": 116,
+      "light_index": 116,
+      "rect": {
+        "x": 539,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#14",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "HOME",
+      "cli_name": "HOME",
+      "label": "home",
+      "desc": "home",
+      "code": "0x4a",
+      "key_index": 117,
+      "light_index": 117,
+      "rect": {
+        "x": 572,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#15",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "PAGEUP",
+      "cli_name": "PAGEUP",
+      "label": "page up",
+      "desc": "page up",
+      "code": "0x4b",
+      "key_index": 118,
+      "light_index": 118,
+      "rect": {
+        "x": 606,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#16",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "NUMLOCK",
+      "cli_name": "NUMLOCK",
+      "label": "Num",
+      "desc": "Num",
+      "code": "0x53",
+      "key_index": 32,
+      "light_index": 32,
+      "rect": {
+        "x": 645,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#17",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_DIVIDE",
+      "cli_name": "KP_DIVIDE",
+      "label": "//",
+      "desc": "//",
+      "code": "0x54",
+      "key_index": 33,
+      "light_index": 33,
+      "rect": {
+        "x": 679,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#18",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_MULTIPLY",
+      "cli_name": "KP_MULTIPLY",
+      "label": "*",
+      "desc": "*",
+      "code": "0x55",
+      "key_index": 34,
+      "light_index": 34,
+      "rect": {
+        "x": 713,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#19",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_MINUS",
+      "cli_name": "KP_MINUS",
+      "label": "-",
+      "desc": "-",
+      "code": "0x56",
+      "key_index": 122,
+      "light_index": 122,
+      "rect": {
+        "x": 747,
+        "y": 91,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "1#20",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "TAB",
+      "cli_name": "TAB",
+      "label": "Tab",
+      "desc": "Tab",
+      "code": "0x2b",
+      "key_index": 37,
+      "light_index": 37,
+      "rect": {
+        "x": 27,
+        "y": 126,
+        "w": 45,
+        "h": 26
+      },
+      "row_col": "2#0",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "Q",
+      "cli_name": "Q",
+      "label": "Q",
+      "desc": "Q",
+      "code": "0x14",
+      "key_index": 38,
+      "light_index": 38,
+      "rect": {
+        "x": 78,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#1",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "W",
+      "cli_name": "W",
+      "label": "W",
+      "desc": "W",
+      "code": "0x1a",
+      "key_index": 39,
+      "light_index": 39,
+      "rect": {
+        "x": 111,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#2",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "E",
+      "cli_name": "E",
+      "label": "E",
+      "desc": "E",
+      "code": "0x8",
+      "key_index": 40,
+      "light_index": 40,
+      "rect": {
+        "x": 145,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#3",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "R",
+      "cli_name": "R",
+      "label": "R",
+      "desc": "R",
+      "code": "0x15",
+      "key_index": 41,
+      "light_index": 41,
+      "rect": {
+        "x": 179,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#4",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "T",
+      "cli_name": "T",
+      "label": "T",
+      "desc": "T",
+      "code": "0x17",
+      "key_index": 42,
+      "light_index": 42,
+      "rect": {
+        "x": 212,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#5",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "Y",
+      "cli_name": "Y",
+      "label": "Y",
+      "desc": "Y",
+      "code": "0x1c",
+      "key_index": 43,
+      "light_index": 43,
+      "rect": {
+        "x": 246,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#6",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "U",
+      "cli_name": "U",
+      "label": "U",
+      "desc": "U",
+      "code": "0x18",
+      "key_index": 44,
+      "light_index": 44,
+      "rect": {
+        "x": 280,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#7",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "I",
+      "cli_name": "I",
+      "label": "I",
+      "desc": "I",
+      "code": "0xc",
+      "key_index": 45,
+      "light_index": 45,
+      "rect": {
+        "x": 314,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#8",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "O",
+      "cli_name": "O",
+      "label": "O",
+      "desc": "O",
+      "code": "0x12",
+      "key_index": 46,
+      "light_index": 46,
+      "rect": {
+        "x": 348,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#9",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "P",
+      "cli_name": "P",
+      "label": "P",
+      "desc": "P",
+      "code": "0x13",
+      "key_index": 47,
+      "light_index": 47,
+      "rect": {
+        "x": 381,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#10",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "LBRACKET",
+      "cli_name": "LBRACKET",
+      "label": "{[",
+      "desc": "{[",
+      "code": "0x2f",
+      "key_index": 48,
+      "light_index": 48,
+      "rect": {
+        "x": 415,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#11",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "RBRACKET",
+      "cli_name": "RBRACKET",
+      "label": "}}",
+      "desc": "}}",
+      "code": "0x30",
+      "key_index": 49,
+      "light_index": 49,
+      "rect": {
+        "x": 448,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#12",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "BACKSLASH",
+      "cli_name": "BACKSLASH",
+      "label": "|\\",
+      "desc": "|\\",
+      "code": "0x31",
+      "key_index": 67,
+      "light_index": 67,
+      "rect": {
+        "x": 482,
+        "y": 126,
+        "w": 43,
+        "h": 26
+      },
+      "row_col": "2#13",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "DELETE",
+      "cli_name": "DELETE",
+      "label": "del",
+      "desc": "del",
+      "code": "0x4c",
+      "key_index": 119,
+      "light_index": 119,
+      "rect": {
+        "x": 539,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#14",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "END",
+      "cli_name": "END",
+      "label": "end",
+      "desc": "end",
+      "code": "0x4d",
+      "key_index": 120,
+      "light_index": 120,
+      "rect": {
+        "x": 572,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#15",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "PAGEDOWN",
+      "cli_name": "PAGEDOWN",
+      "label": "page down",
+      "desc": "page down",
+      "code": "0x4e",
+      "key_index": 121,
+      "light_index": 121,
+      "rect": {
+        "x": 606,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#16",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_7",
+      "cli_name": "KP_7",
+      "label": "7",
+      "desc": "7",
+      "code": "0x5f",
+      "key_index": 50,
+      "light_index": 50,
+      "rect": {
+        "x": 645,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#17",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_8",
+      "cli_name": "KP_8",
+      "label": "8",
+      "desc": "8",
+      "code": "0x60",
+      "key_index": 51,
+      "light_index": 51,
+      "rect": {
+        "x": 679,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#18",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_9",
+      "cli_name": "KP_9",
+      "label": "9",
+      "desc": "9",
+      "code": "0x61",
+      "key_index": 52,
+      "light_index": 52,
+      "rect": {
+        "x": 713,
+        "y": 126,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "2#19",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_PLUS",
+      "cli_name": "KP_PLUS",
+      "label": "+",
+      "desc": "+",
+      "code": "0x57",
+      "key_index": 123,
+      "light_index": 123,
+      "rect": {
+        "x": 747,
+        "y": 126,
+        "w": 26,
+        "h": 57
+      },
+      "row_col": "2#20",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "CAPSLOCK",
+      "cli_name": "CAPSLOCK",
+      "label": "CapsLock",
+      "desc": "CapsLock",
+      "code": "0x39",
+      "key_index": 55,
+      "light_index": 55,
+      "rect": {
+        "x": 27,
+        "y": 157,
+        "w": 52,
+        "h": 26
+      },
+      "row_col": "3#0",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "A",
+      "cli_name": "A",
+      "label": "A",
+      "desc": "A",
+      "code": "0x4",
+      "key_index": 56,
+      "light_index": 56,
+      "rect": {
+        "x": 86,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#1",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "S",
+      "cli_name": "S",
+      "label": "S",
+      "desc": "S",
+      "code": "0x16",
+      "key_index": 57,
+      "light_index": 57,
+      "rect": {
+        "x": 120,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#2",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "D",
+      "cli_name": "D",
+      "label": "D",
+      "desc": "D",
+      "code": "0x7",
+      "key_index": 58,
+      "light_index": 58,
+      "rect": {
+        "x": 154,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#3",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "F",
+      "cli_name": "F",
+      "label": "F",
+      "desc": "F",
+      "code": "0x9",
+      "key_index": 59,
+      "light_index": 59,
+      "rect": {
+        "x": 187,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#4",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "G",
+      "cli_name": "G",
+      "label": "G",
+      "desc": "G",
+      "code": "0xa",
+      "key_index": 60,
+      "light_index": 60,
+      "rect": {
+        "x": 221,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#5",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "H",
+      "cli_name": "H",
+      "label": "H",
+      "desc": "H",
+      "code": "0xb",
+      "key_index": 61,
+      "light_index": 61,
+      "rect": {
+        "x": 254,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#6",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "J",
+      "cli_name": "J",
+      "label": "J",
+      "desc": "J",
+      "code": "0xd",
+      "key_index": 62,
+      "light_index": 62,
+      "rect": {
+        "x": 288,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#7",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "K",
+      "cli_name": "K",
+      "label": "K",
+      "desc": "K",
+      "code": "0xe",
+      "key_index": 63,
+      "light_index": 63,
+      "rect": {
+        "x": 322,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#8",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "L",
+      "cli_name": "L",
+      "label": "L",
+      "desc": "L",
+      "code": "0xf",
+      "key_index": 64,
+      "light_index": 64,
+      "rect": {
+        "x": 355,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#9",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "SEMICOLON",
+      "cli_name": "SEMICOLON",
+      "label": ":;",
+      "desc": ":;",
+      "code": "0x33",
+      "key_index": 65,
+      "light_index": 65,
+      "rect": {
+        "x": 389,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#10",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "QUOTE",
+      "cli_name": "QUOTE",
+      "label": "\"'",
+      "desc": "\"'",
+      "code": "0x34",
+      "key_index": 66,
+      "light_index": 66,
+      "rect": {
+        "x": 422,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#11",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "ENTER",
+      "cli_name": "ENTER",
+      "label": "Enter",
+      "desc": "Enter",
+      "code": "0x28",
+      "key_index": 85,
+      "light_index": 85,
+      "rect": {
+        "x": 456,
+        "y": 157,
+        "w": 69,
+        "h": 26
+      },
+      "row_col": "3#13",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_4",
+      "cli_name": "KP_4",
+      "label": "4",
+      "desc": "4",
+      "code": "0x5c",
+      "key_index": 68,
+      "light_index": 68,
+      "rect": {
+        "x": 645,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#17",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_5",
+      "cli_name": "KP_5",
+      "label": "5",
+      "desc": "5",
+      "code": "0x5d",
+      "key_index": 69,
+      "light_index": 69,
+      "rect": {
+        "x": 679,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#18",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_6",
+      "cli_name": "KP_6",
+      "label": "6",
+      "desc": "6",
+      "code": "0x5e",
+      "key_index": 70,
+      "light_index": 70,
+      "rect": {
+        "x": 713,
+        "y": 157,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "3#19",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "LSHIFT",
+      "cli_name": "LSHIFT",
+      "label": "Shift_L",
+      "desc": "Shift_L",
+      "code": "0xe1",
+      "key_index": 73,
+      "light_index": 73,
+      "rect": {
+        "x": 27,
+        "y": 192,
+        "w": 68,
+        "h": 26
+      },
+      "row_col": "4#0",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "Z",
+      "cli_name": "Z",
+      "label": "Z",
+      "desc": "Z",
+      "code": "0x1d",
+      "key_index": 74,
+      "light_index": 74,
+      "rect": {
+        "x": 102,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#2",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "X",
+      "cli_name": "X",
+      "label": "X",
+      "desc": "X",
+      "code": "0x1b",
+      "key_index": 75,
+      "light_index": 75,
+      "rect": {
+        "x": 136,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#3",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "C",
+      "cli_name": "C",
+      "label": "C",
+      "desc": "C",
+      "code": "0x6",
+      "key_index": 76,
+      "light_index": 76,
+      "rect": {
+        "x": 170,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#4",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "V",
+      "cli_name": "V",
+      "label": "V",
+      "desc": "V",
+      "code": "0x19",
+      "key_index": 77,
+      "light_index": 77,
+      "rect": {
+        "x": 204,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#5",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "B",
+      "cli_name": "B",
+      "label": "B",
+      "desc": "B",
+      "code": "0x5",
+      "key_index": 78,
+      "light_index": 78,
+      "rect": {
+        "x": 237,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#6",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "N",
+      "cli_name": "N",
+      "label": "N",
+      "desc": "N",
+      "code": "0x11",
+      "key_index": 79,
+      "light_index": 79,
+      "rect": {
+        "x": 271,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#7",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "M",
+      "cli_name": "M",
+      "label": "M",
+      "desc": "M",
+      "code": "0x10",
+      "key_index": 80,
+      "light_index": 80,
+      "rect": {
+        "x": 305,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#8",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "COMMA",
+      "cli_name": "COMMA",
+      "label": ",<",
+      "desc": ",<",
+      "code": "0x36",
+      "key_index": 81,
+      "light_index": 81,
+      "rect": {
+        "x": 339,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#9",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "DOT",
+      "cli_name": "DOT",
+      "label": ".>",
+      "desc": ".>",
+      "code": "0x37",
+      "key_index": 82,
+      "light_index": 82,
+      "rect": {
+        "x": 373,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#10",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "SLASH",
+      "cli_name": "SLASH",
+      "label": "/?",
+      "desc": "/?",
+      "code": "0x38",
+      "key_index": 83,
+      "light_index": 83,
+      "rect": {
+        "x": 406,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#11",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "RSHIFT",
+      "cli_name": "RSHIFT",
+      "label": "Shift_R",
+      "desc": "Shift_R",
+      "code": "0xe5",
+      "key_index": 84,
+      "light_index": 84,
+      "rect": {
+        "x": 440,
+        "y": 192,
+        "w": 85,
+        "h": 26
+      },
+      "row_col": "4#13",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "UP",
+      "cli_name": "UP",
+      "label": "↑",
+      "desc": "↑",
+      "code": "0x52",
+      "key_index": 101,
+      "light_index": 101,
+      "rect": {
+        "x": 572,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#15",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_1",
+      "cli_name": "KP_1",
+      "label": "1",
+      "desc": "1",
+      "code": "0x59",
+      "key_index": 86,
+      "light_index": 86,
+      "rect": {
+        "x": 645,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#17",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_2",
+      "cli_name": "KP_2",
+      "label": "2",
+      "desc": "2",
+      "code": "0x5a",
+      "key_index": 87,
+      "light_index": 87,
+      "rect": {
+        "x": 679,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#18",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_3",
+      "cli_name": "KP_3",
+      "label": "3",
+      "desc": "3",
+      "code": "0x5b",
+      "key_index": 88,
+      "light_index": 88,
+      "rect": {
+        "x": 713,
+        "y": 192,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "4#19",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_ENTER",
+      "cli_name": "KP_ENTER",
+      "label": "Enter",
+      "desc": "Enter",
+      "code": "0x58",
+      "key_index": 106,
+      "light_index": 106,
+      "rect": {
+        "x": 747,
+        "y": 192,
+        "w": 26,
+        "h": 59
+      },
+      "row_col": "4#20",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "LCTRL",
+      "cli_name": "LCTRL",
+      "label": "Ctrl_L",
+      "desc": "Ctrl_L",
+      "code": "0xe0",
+      "key_index": 91,
+      "light_index": 91,
+      "rect": {
+        "x": 27,
+        "y": 227,
+        "w": 34,
+        "h": 26
+      },
+      "row_col": "5#0",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "LWIN",
+      "cli_name": "LWIN",
+      "label": "Win_L",
+      "desc": "Win_L",
+      "code": "0xe3",
+      "key_index": 92,
+      "light_index": 92,
+      "rect": {
+        "x": 69,
+        "y": 227,
+        "w": 34,
+        "h": 26
+      },
+      "row_col": "5#1",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "LALT",
+      "cli_name": "LALT",
+      "label": "Alt_L",
+      "desc": "Alt_L",
+      "code": "0xe2",
+      "key_index": 93,
+      "light_index": 93,
+      "rect": {
+        "x": 111,
+        "y": 227,
+        "w": 34,
+        "h": 26
+      },
+      "row_col": "5#2",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "SPACE",
+      "cli_name": "SPACE",
+      "label": "Space",
+      "desc": "Space",
+      "code": "0x2c",
+      "key_index": 94,
+      "light_index": 94,
+      "rect": {
+        "x": 152,
+        "y": 227,
+        "w": 204,
+        "h": 26
+      },
+      "row_col": "5#6",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "RALT",
+      "cli_name": "RALT",
+      "label": "Alt_R",
+      "desc": "Alt_R",
+      "code": "0xe6",
+      "key_index": 95,
+      "light_index": 95,
+      "rect": {
+        "x": 363,
+        "y": 227,
+        "w": 34,
+        "h": 26
+      },
+      "row_col": "5#10",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "FN",
+      "cli_name": "FN",
+      "label": "Fn",
+      "desc": "Fn",
+      "code": "0xAF",
+      "key_index": 96,
+      "light_index": 96,
+      "rect": {
+        "x": 406,
+        "y": 227,
+        "w": 34,
+        "h": 26
+      },
+      "row_col": "5#11",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "RWIN",
+      "cli_name": "RWIN",
+      "label": "APP",
+      "desc": "APP",
+      "code": "0x65",
+      "key_index": 97,
+      "light_index": 97,
+      "rect": {
+        "x": 448,
+        "y": 227,
+        "w": 34,
+        "h": 26
+      },
+      "row_col": "5#12",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "RCTRL",
+      "cli_name": "RCTRL",
+      "label": "Ctrl_R",
+      "desc": "Ctrl_R",
+      "code": "0xE4",
+      "key_index": 98,
+      "light_index": 98,
+      "rect": {
+        "x": 490,
+        "y": 227,
+        "w": 34,
+        "h": 26
+      },
+      "row_col": "5#13",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "LEFT",
+      "cli_name": "LEFT",
+      "label": "←",
+      "desc": "←",
+      "code": "0x50",
+      "key_index": 99,
+      "light_index": 99,
+      "rect": {
+        "x": 539,
+        "y": 227,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "5#14",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "DOWN",
+      "cli_name": "DOWN",
+      "label": "↓",
+      "desc": "↓",
+      "code": "0x51",
+      "key_index": 100,
+      "light_index": 100,
+      "rect": {
+        "x": 572,
+        "y": 227,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "5#15",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "RIGHT",
+      "cli_name": "RIGHT",
+      "label": "→",
+      "desc": "→",
+      "code": "0x4f",
+      "key_index": 102,
+      "light_index": 102,
+      "rect": {
+        "x": 606,
+        "y": 227,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "5#16",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_0",
+      "cli_name": "KP_0",
+      "label": "0",
+      "desc": "0",
+      "code": "0x62",
+      "key_index": 104,
+      "light_index": 104,
+      "rect": {
+        "x": 645,
+        "y": 227,
+        "w": 60,
+        "h": 26
+      },
+      "row_col": "5#18",
+      "fnlayer_disable": 0
+    },
+    {
+      "id": "KP_DOT",
+      "cli_name": "KP_DOT",
+      "label": ".",
+      "desc": ".",
+      "code": "0x63",
+      "key_index": 105,
+      "light_index": 105,
+      "rect": {
+        "x": 713,
+        "y": 227,
+        "w": 26,
+        "h": 26
+      },
+      "row_col": "5#19",
+      "fnlayer_disable": 0
+    }
+  ]
+}

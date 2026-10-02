@@ -1,23 +1,344 @@
-<!doctype html>
-<meta charset="utf-8">
-<title>f108-pro</title>
-<h1>f108-pro</h1>
-<pre id="box">cargando…</pre>
-<script>
-const box = document.getElementById("box");
-const t = new URLSearchParams(location.search).get("t");
-if (!t) {
-  box.textContent = "Falta el token: abre la URL completa que imprime el programa (con ?t=...).";
-} else {
-  fetch("/api/keys", { headers: { "X-Token": t } })
-    .then(r => {
-      if (!r.ok) throw new Error(r.status + " " + r.statusText);
-      return r.json();
-    })
-    .then(k => {
-      box.textContent = k.length + " teclas\n" +
-        k.slice(0, 10).map(x => x.name + " → " + x.index).join("\n");
-    })
-    .catch(e => { box.textContent = "Error: " + e.message; });
-}
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="app.title">AULA F108 Pro Keyboard Manager</title>
+  
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="styles/themes.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/keyboard.css">
+  <link rel="stylesheet" href="styles/terminal.css">
+  <script src="js/img_fallback.js"></script>
+  <link rel="stylesheet" href="styles/keys-flat.css">
+</head>
+<body class="theme-purple">
+  <div class="app-overlay"></div>
+
+  <div class="app-container">
+    <!-- Top Header Bar -->
+    <header>
+      <div class="brand-section">
+        <img class="logo" src="../assets/logo/logo.png" alt="AULA">
+        <div class="brand-title">
+          <h1 data-i18n="app.title">AULA F108 Pro</h1>
+          <span data-i18n="app.subtitle">Linux Control Center & Driver Interface</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Quick Action Buttons -->
+        <button class="btn btn-secondary" id="btn-quick-sync-clock" data-i18n-title="home.sync_clock_btn">
+          ⏱️ <span data-i18n="home.sync_clock_btn">Sync Clock</span>
+        </button>
+        <button class="btn btn-secondary" id="btn-quick-lights-off" data-i18n-title="home.lights_off_btn">
+          🌙 <span data-i18n="home.lights_off_btn">Lights Off</span>
+        </button>
+
+        <!-- Hardware Status Badge -->
+        <div class="status-badge" id="status-badge">
+          <div class="status-dot" id="status-dot"></div>
+          <span id="status-text">Detecting...</span>
+        </div>
+
+        <!-- Language Selector -->
+        <select id="select-lang" class="quick-select" title="Change Language">
+          <option value="es">Español</option>
+          <option value="en">English (EN)</option>
+          <option value="pt_BR">Português (BR)</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Main Body: Sidebar + Workspace -->
+    <div class="body-layout">
+      <!-- Left Sidebar Navigation -->
+      <aside class="sidebar">
+        <button class="nav-item active" data-tab="home">
+          <img src="../assets/icons/tab_home.png" alt="Home">
+          <span data-i18n="nav.home">Home</span>
+        </button>
+        <button class="nav-item" data-tab="remap">
+          <img src="../assets/icons/tab_customkey.png" alt="Remap">
+          <span data-i18n="nav.remap">Key Remap</span>
+        </button>
+        <button class="nav-item" data-tab="lighting">
+          <img src="../assets/icons/tab_light.png" alt="Lighting">
+          <span data-i18n="nav.lighting">Lighting Effects</span>
+        </button>
+        <button class="nav-item" data-tab="perkey">
+          <img src="../assets/icons/tab_userlight.png" alt="Per-Key">
+          <span data-i18n="nav.perkey">Per-Key RGB</span>
+        </button>
+        <button class="nav-item" data-tab="lcd">
+          <img src="../assets/icons/tab_tft.png" alt="LCD">
+          <span data-i18n="nav.lcd">TFT Screen</span>
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <img src="../assets/icons/tab_config.png" alt="Settings">
+          <span data-i18n="nav.settings">Settings</span>
+        </button>
+      </aside>
+
+      <!-- Center Workspace -->
+      <main class="workspace">
+        <!-- Interactive 108-Key Keyboard Canvas -->
+        <section class="canvas-wrapper">
+          <div id="keyboard-stage-container"></div>
+        </section>
+
+        <!-- Tab 1: Home -->
+        <div class="tab-pane active" id="pane-home">
+          <div class="card">
+            <h2 class="card-title">⌨️ <span data-i18n="home.welcome">Welcome to AULA F108 Pro Manager</span></h2>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;" data-i18n="home.desc">
+              Select a category on the left navigation to customize your keyboard lighting, key assignments, and TFT screen. All actions generate real-time, independent CLI commands shown in the bottom console.
+            </p>
+          </div>
+
+          <div class="controls-grid">
+            <div class="card">
+              <div class="card-title">🔌 <span data-i18n="home.connection">Connection Mode</span></div>
+              <div style="font-size: 13px; font-weight: 500;" id="home-conn-detail">Checking USB interfaces...</div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+                Interface 3: Feature Reports (Control)<br>
+                Interface 2: Interrupt Out/In (TFT LCD Stream)
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">⚡ <span data-i18n="home.quick_actions">Quick Actions</span></div>
+              <div class="btn-row">
+                <button class="btn btn-secondary" id="btn-home-sync-clock" data-i18n="home.sync_clock_btn">Sync Clock</button>
+                <button class="btn btn-secondary" id="btn-home-lights-off" data-i18n="home.lights_off_btn">Lights Off</button>
+                <button class="btn btn-secondary" id="btn-home-lights-default" data-i18n="home.lights_default_btn">Default Lighting</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Key Remap -->
+        <div class="tab-pane" id="pane-remap">
+          <div class="card">
+            <div class="card-title">🔀 <span data-i18n="remap.title">Physical Key Remapping</span></div>
+            <p class="remap-help" data-i18n="remap.help" style="font-size:13px;line-height:1.5;opacity:.85;margin:0 0 14px"></p>
+            <p class="remap-note" data-i18n="remap.reset_note" style="font-size:12px;opacity:.7;margin:0 0 14px"></p>
+            <div class="controls-grid">
+              <div class="form-group">
+                <label data-i18n="remap.layer_select">Active Layer</label>
+                <select id="remap-layer-select">
+                  <option value="base" data-i18n="remap.layer_base">Base Layer (Normal)</option>
+                  <option value="fn" data-i18n="remap.layer_fn">FN Layer</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="remap.selected_key">Selected Key</label>
+                <input type="text" id="remap-selected-key-name" readonly placeholder="Click a key above..." data-i18n-placeholder="remap.none_selected">
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="remap.action_type">Action Type</label>
+                <select id="remap-action-type">
+                  <option value="key" data-i18n="remap.action_key">Standard HID Key</option>
+                  <option value="combo" data-i18n="remap.action_combo">Key with Modifiers (Shortcut)</option>
+                  <option value="consumer" data-i18n="remap.action_consumer">Multimedia / Consumer Control</option>
+                  <option value="mouse" data-i18n="remap.action_mouse">Mouse Action</option>
+                  <option value="disabled" data-i18n="remap.action_disabled">Disable Key</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="remap-target-key-group">
+                <label data-i18n="remap.target_key">Target Key</label>
+                <select id="remap-target-key-select"></select>
+              </div>
+            </div>
+
+            <div class="btn-row" style="margin-top: 16px;">
+              <button class="btn" id="btn-apply-remap" data-i18n="remap.apply">Apply Remap to Keyboard</button>
+              <button class="btn btn-secondary" id="btn-reset-key" data-i18n="remap.reset_key">Restore Key Default</button>
+                <button class="btn btn-secondary" id="btn-reset-all" data-i18n="remap.reset_all"></button>
+              <button class="btn btn-secondary" id="btn-export-yaml" data-i18n="remap.export_yaml">Export YAML</button>
+              <button class="btn btn-secondary" id="btn-import-yaml" data-i18n="remap.import_yaml">Import YAML</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Lighting Effects -->
+        <div class="tab-pane" id="pane-lighting">
+          <div class="card">
+            <div class="card-title">💡 <span data-i18n="lighting.title">Global RGB Lighting</span></div>
+            <div class="controls-grid">
+              <div class="form-group">
+                <label data-i18n="lighting.mode">Lighting Mode</label>
+                <select id="lighting-mode-select"></select>
+              </div>
+
+              <div class="form-group">
+                <label><span data-i18n="lighting.brightness">Brightness</span>: <span class="slider-val" id="val-brightness">5</span></label>
+                <div class="slider-group">
+                  <input type="range" id="slider-brightness" min="0" max="5" value="5">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label><span data-i18n="lighting.speed">Speed</span>: <span class="slider-val" id="val-speed">3</span></label>
+                <div class="slider-group">
+                  <input type="range" id="slider-speed" min="1" max="5" value="3">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="lighting.color">Color (RGB)</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <input type="color" id="lighting-color-picker" value="#9333ea" style="width: 44px; height: 36px; border: none; background: transparent; cursor: pointer;">
+                  <input type="text" id="lighting-color-hex" value="#9333EA" style="width: 100px; text-transform: uppercase;">
+                </div>
+              </div>
+            </div>
+
+            <!-- Color Swatches -->
+            <div style="margin-top: 14px;">
+              <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;" data-i18n="lighting.preset_colors">Preset Colors</label>
+              <div class="btn-row" style="margin-top: 8px;" id="lighting-color-swatches"></div>
+            </div>
+
+            <div class="btn-row" style="margin-top: 18px;">
+              <button class="btn" id="btn-apply-lighting" data-i18n="lighting.apply">Apply Lighting Mode</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Per-Key RGB -->
+        <div class="tab-pane" id="pane-perkey">
+          <div class="card">
+            <div class="card-title">🎨 <span data-i18n="perkey.title">Per-Key Individual RGB Lighting</span></div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;" data-i18n="perkey.desc">
+              Select a color from the palette, then click or drag across the keys to customize their individual backlight colors.
+            </p>
+
+            <div class="controls-grid">
+              <div class="form-group">
+                <label data-i18n="perkey.brush_color">Active Paint Color</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <input type="color" id="perkey-color-picker" value="#00ffcc" style="width: 44px; height: 36px; border: none; background: transparent; cursor: pointer;">
+                  <input type="text" id="perkey-color-hex" value="#00FFCC" style="width: 100px; text-transform: uppercase;">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="perkey.presets">Zone Presets</label>
+                <div class="btn-row">
+                  <button class="btn btn-secondary" id="preset-wasd" data-i18n="perkey.preset_wasd">WASD + Arrows</button>
+                  <button class="btn btn-secondary" id="preset-numpad" data-i18n="perkey.preset_numpad">Numpad</button>
+                  <button class="btn btn-secondary" id="preset-rainbow" data-i18n="perkey.preset_rainbow">Rainbow</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-row" style="margin-top: 16px;">
+              <button class="btn" id="btn-apply-perkey" data-i18n="perkey.apply">Flash Per-Key RGB</button>
+              <button class="btn btn-secondary" id="btn-perkey-clear" data-i18n="perkey.clear_all">Clear All (Off)</button>
+              <button class="btn btn-secondary" id="btn-perkey-export" data-i18n="perkey.export_yaml">Export YAML</button>
+              <button class="btn btn-secondary" id="btn-perkey-import" data-i18n="perkey.import_yaml">Import YAML</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: TFT LCD Screen -->
+        <div class="tab-pane" id="pane-lcd">
+          <div class="controls-grid">
+            <div class="card">
+              <div class="card-title">🕒 <span data-i18n="lcd.clock_section">Hardware Real-Time Clock</span></div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;" data-i18n="lcd.clock_desc">
+                Synchronizes the keyboard LCD clock and calendar with your Linux system time.
+              </p>
+              <button class="btn" id="btn-lcd-sync-clock" data-i18n="lcd.sync_clock">Synchronize System Clock</button>
+            </div>
+
+            <div class="card">
+              <div class="card-title">🖼️ <span data-i18n="lcd.image_section">Custom Display Image / GIF Animation</span></div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;" data-i18n="lcd.image_desc">
+                Upload any static image (PNG/JPEG) or animated GIF. Images will be automatically scaled and quantized to 240x135 RGB565 format.
+              </p>
+              <div class="btn-row">
+                <button class="btn btn-secondary" id="btn-lcd-select-file" data-i18n="lcd.select_file">Select Image or GIF...</button>
+                <button class="btn" id="btn-lcd-flash" data-i18n="lcd.flash_lcd">Upload and Flash to LCD</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 6: Settings -->
+        <div class="tab-pane" id="pane-settings">
+          <div class="card">
+            <div class="card-title">⚙️ <span data-i18n="settings.title">Application Preferences</span></div>
+            <div class="controls-grid">
+              <div class="form-group">
+                <label data-i18n="settings.theme">Visual Theme / Background</label>
+                <select id="select-theme">
+                  <option value="theme-purple" data-i18n="settings.theme_purple">Purple Smoke (Official AULA)</option>
+                  <option value="theme-oled" data-i18n="settings.theme_oled">OLED Dark (Pure Black)</option>
+                  <option value="theme-cyberpunk" data-i18n="settings.theme_cyberpunk">Cyberpunk Neon</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="settings.language">Interface Language</label>
+                <select id="select-settings-lang">
+          <option value="es">Español</option>
+                  <option value="en">English (Default)</option>
+                  <option value="pt_BR">Português (Brasil)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="settings.cli_path">CLI Binary Path (f108-pro)</label>
+                <input type="text" id="input-cli-path" value="~/.local/bin/f108-pro">
+              </div>
+            </div>
+
+            <div style="margin-top: 18px; border-top: 1px solid var(--panel-border); padding-top: 14px;">
+              <h3 style="font-size: 13px; color: var(--accent-hover); margin-bottom: 6px;" data-i18n="settings.about">About AULA F108 Pro Linux Suite</h3>
+              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;" data-i18n="settings.about_text">
+                Built for native Linux desktop systems. Completely independent from wine or Windows software. Direct USB HID interface. Compatible with both Rust and Go CLI drivers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Collapsible Bottom CLI Console -->
+    <div class="cli-panel expanded" id="cli-panel">
+      <div class="cli-header" id="cli-toggle-btn">
+        <div class="cli-header-left">
+          <span class="cli-toggle-icon">▼</span>
+          <span class="cli-title" data-i18n="cli_console.title">CLI Command Composer & Terminal</span>
+          <div class="cli-preview-inline" id="cli-cmd-preview">f108-pro clock</div>
+        </div>
+
+        <div class="cli-actions">
+          <button class="cli-btn-sm" id="cli-copy-btn" data-i18n="cli_console.copy">Copy</button>
+          <button class="cli-btn-sm run" id="cli-run-btn" data-i18n="cli_console.run">Run in Terminal</button>
+          <button class="cli-btn-sm" id="cli-clear-btn" data-i18n="cli_console.clear">Clear</button>
+        </div>
+      </div>
+
+      <div class="cli-body" id="cli-output-box"></div>
+    </div>
+  </div>
+
+      <!-- Scripts -->
+  <script src="js/bridge.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/keyboard_canvas.js"></script>
+  <script src="js/cli_composer.js"></script>
+  <script src="js/tab_remap.js"></script>
+  <script src="js/tab_lighting.js"></script>
+  <script src="js/tab_perkey.js"></script>
+  <script src="js/tab_lcd.js"></script>
+  <script src="js/tab_settings.js"></script>
+  <script src="js/app_main.js"></script>\n</body>
+</html>

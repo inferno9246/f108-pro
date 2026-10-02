@@ -1,0 +1,123 @@
+/**
+ * keyboard.css - 108-Key Interactive Matrix Canvas & Keycap Styling.
+ */
+
+.keyboard-stage {
+  position: relative;
+  width: 800px;
+  height: 300px;
+  user-select: none;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  background: #15151e;
+}
+
+.keyboard-layout-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Interactive Keycap Buttons */
+.keycap {
+  position: absolute;
+  z-index: 2;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+  transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.keycap:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+  z-index: 10;
+}
+
+.keycap:active {
+  transform: scale(0.94);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.keycap.selected {
+  border: 2px solid var(--accent-hover) !important;
+  background: rgba(168, 85, 247, 0.35) !important;
+  box-shadow: 0 0 14px var(--accent-glow) !important;
+  z-index: 15;
+}
+
+/* Key with custom remap */
+.keycap.remapped::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #facc15;
+  box-shadow: 0 0 6px #facc15;
+}
+
+/* Key with simulated LED backlight (Per-Key tab) */
+.keycap.led-active {
+  background: radial-gradient(circle, var(--key-led-color, rgba(255,255,255,0.4)) 0%, transparent 80%);
+  border-color: var(--key-led-color, rgba(255,255,255,0.6));
+  box-shadow: 0 0 12px var(--key-led-color, rgba(255,255,255,0.4));
+}
+
+.key-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: transparent; /* Text is visually on image, visible on hover/selected */
+  transition: color 0.15s;
+  pointer-events: none;
+}
+
+.keycap:hover .key-label,
+.keycap.selected .key-label {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* Hotspot over TFT screen & knob */
+.screen-hotspot {
+  position: absolute;
+  top: 48px;
+  left: 642px;
+  width: 130px;
+  height: 34px;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  z-index: 5;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+.screen-hotspot:hover {
+  background: rgba(168, 85, 247, 0.3);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 12px var(--accent-glow);
+}

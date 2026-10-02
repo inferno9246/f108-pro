@@ -1,0 +1,85 @@
+/**
+ * themes.css - Visual Themes & Color Schemes for AULA F108 Pro GUI.
+ */
+
+:root {
+  /* Default: Official Purple Smoke */
+  --bg-primary: #0a0814;
+  --bg-image: url('../../assets/themes/home_bkg.png');
+  --bg-overlay: rgba(10, 8, 20, 0.75);
+  --panel-bg: rgba(22, 18, 38, 0.82);
+  --panel-border: rgba(147, 51, 234, 0.25);
+  --card-bg: rgba(28, 24, 48, 0.65);
+  
+  --accent: #a855f7;
+  --accent-hover: #c084fc;
+  --accent-glow: rgba(168, 85, 247, 0.45);
+  --accent-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --sidebar-bg: rgba(15, 12, 28, 0.90);
+  --sidebar-border: rgba(147, 51, 234, 0.2);
+  --sidebar-active: rgba(168, 85, 247, 0.25);
+  
+  --terminal-bg: rgba(10, 8, 16, 0.94);
+  --terminal-border: rgba(147, 51, 234, 0.3);
+  
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #38bdf8;
+}
+
+/* Theme: OLED Dark (Pure Black) */
+body.theme-oled {
+  --bg-primary: #000000;
+  --bg-image: none;
+  --bg-overlay: #000000;
+  --panel-bg: rgba(18, 18, 20, 0.95);
+  --panel-border: rgba(255, 255, 255, 0.12);
+  --card-bg: rgba(26, 26, 30, 0.8);
+  
+  --accent: #00f2fe;
+  --accent-hover: #4facfe;
+  --accent-glow: rgba(0, 242, 254, 0.4);
+  --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  
+  --sidebar-bg: rgba(10, 10, 12, 0.98);
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-active: rgba(0, 242, 254, 0.15);
+  
+  --terminal-bg: rgba(6, 6, 8, 0.98);
+  --terminal-border: rgba(255, 255, 255, 0.15);
+}
+
+/* Theme: Cyberpunk Neon */
+body.theme-cyberpunk {
+  --bg-primary: #0b0716;
+  --bg-image: linear-gradient(135deg, #18092e 0%, #06030e 100%);
+  --bg-overlay: rgba(11, 7, 22, 0.85);
+  --panel-bg: rgba(25, 15, 46, 0.88);
+  --panel-border: rgba(244, 63, 94, 0.4);
+  --card-bg: rgba(35, 20, 65, 0.7);
+  
+  --accent: #f43f5e;
+  --accent-hover: #fb7185;
+  --accent-glow: rgba(244, 63, 94, 0.5);
+  --accent-gradient: linear-gradient(135deg, #f43f5e 0%, #fbbf24 100%);
+  
+  --sidebar-bg: rgba(18, 10, 34, 0.95);
+  --sidebar-border: rgba(244, 63, 94, 0.3);
+  --sidebar-active: rgba(244, 63, 94, 0.25);
+  
+  --terminal-bg: rgba(12, 6, 22, 0.96);
+  --terminal-border: rgba(244, 63, 94, 0.4);
+}
+
+/* Theme: Custom Wallpaper */
+body.theme-custom {
+  --bg-overlay: rgba(10, 10, 15, 0.82);
+  --panel-bg: rgba(20, 20, 30, 0.85);
+  --panel-border: rgba(255, 255, 255, 0.15);
+}
