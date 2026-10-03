@@ -2,7 +2,10 @@
 
 package aula
 
-import "errors"
+import (
+	"errors"
+	"time"
+)
 
 type WirelessDevice struct{}
 
@@ -17,3 +20,5 @@ func (d *WirelessDevice) ResetKeys(_ []uint8, _ bool) error { return errWireless
 var ErrNoACK = errors.New("sin ACK del teclado")
 
 func (d *WirelessDevice) SetLighting(_ LightingConfig) error { return errWirelessUnsupported }
+
+func (d *WirelessDevice) SyncClock(_ time.Time) error { return errWirelessUnsupported }

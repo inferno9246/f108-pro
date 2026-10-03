@@ -176,10 +176,25 @@ func (c *ModesCmd) Run() error {
 }
 
 // ClockCmd syncs the LCD clock to the system time.
-type ClockCmd struct{}
+type ClockCmd struct {
+	Wireless bool `flag:"" aliases:"2.4g" help:"Send over the 2.4G dongle (Linux only, experimental)."`
+}
 
 // Run executes the clock command.
 func (c *ClockCmd) Run() error {
+	if c.Wireless {
+		wdev, err := aula.OpenWireless()
+		if err != nil {
+			return err
+		}
+		defer wdev.Close()
+		now := time.Now()
+		if err := wdev.SyncClock(now); err != nil {
+			return err
+		}
+		fmt.Printf("Clock synced over 2.4G to %s\n", now.Format("2006-01-02 15:04:05"))
+		return nil
+	}
 	dev, err := aula.Open()
 	if err != nil {
 		return err

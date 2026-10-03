@@ -244,7 +244,7 @@ class AppMain {
             if (el) el.addEventListener('click', fn);
         };
 
-        const syncClock = () => log('[INFO] El reloj necesita el cable USB (FN + 4) y todavía no está disponible en esta versión.');
+        const syncClock = () => run('Reloj sincronizado', 'sync_clock');
         bind('btn-quick-sync-clock', syncClock);
         bind('btn-home-sync-clock', syncClock);
 

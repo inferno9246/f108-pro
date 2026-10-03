@@ -165,3 +165,17 @@ func (d *WirelessDevice) SetLighting(cfg LightingConfig) error {
 		0, 0, 0xAA, 0x55,
 	})
 }
+
+// SyncClock sincroniza el reloj de la pantalla por el dongle 2.4G.
+// Formato reconstruido de FUN_00423c40 (offsets del payload; el offset 0 del
+// paquete es el report ID): 0 = 0x0C, 1 = 0x10, 4 = perfil, 5 = 0x5A, 6 = año-2000,
+// 7 = mes, 8 = día, 9 = hora, 10 = minuto, 11 = segundo, 13 = día de la semana
+// (0 = domingo), 17-18 = AA 55.
+func (d *WirelessDevice) SyncClock(t time.Time) error {
+	return d.send([]byte{
+		0x0C, 0x10, 0x00, 0x00, 0x01, 0x5A,
+		byte(t.Year() % 2000), byte(t.Month()), byte(t.Day()),
+		byte(t.Hour()), byte(t.Minute()), byte(t.Second()),
+		0x00, byte(t.Weekday()), 0, 0, 0, 0xAA, 0x55,
+	})
+}

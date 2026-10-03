@@ -62,6 +62,8 @@ func handleInvoke(w http.ResponseWriter, r *http.Request) {
 		data, err = lightApply(aula.LightingConfig{Mode: aula.ModeBreath, R: 147, G: 51, B: 234, Brightness: 5, Speed: 3})
 	case "light_apply":
 		data, err = lightApplyPayload(req.Payload)
+	case "sync_clock":
+		data, err = clockSync()
 	case "get_device_status":
 		data = map[string]bool{
 			"usb_connected":    usbPresent("0c45", "800a"),
