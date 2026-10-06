@@ -169,6 +169,30 @@
     "stop": "Parar",
     "running": "Ativo",
     "stopped": "Parado",
-    "started": "Modo música ativado"
+    "started": "Modo música ativado",
+    "fore": {
+      "1": "Verde / amarelo / vermelho",
+      "2": "Arco-íris",
+      "3": "Arco-íris invertido",
+      "4": "Degradê",
+      "5": "Ciclo de espectro",
+      "6": "Branco",
+      "7": "Vermelho"
+    },
+    "back": {
+      "0": "Sem fundo",
+      "1": "Verde / amarelo / vermelho",
+      "2": "Arco-íris",
+      "3": "Arco-íris invertido",
+      "4": "Degradê",
+      "5": "Ciclo de espectro",
+      "6": "Branco",
+      "7": "Vermelho",
+      "8": "Laranja",
+      "9": "Amarelo",
+      "10": "Azul",
+      "11": "Verde",
+      "12": "Verde (variante)"
+    }
   }
 }

@@ -46,8 +46,8 @@ func (c musicCfg) validate() error {
 	switch {
 	case c.Fore < 1 || c.Fore > 7:
 		return errors.New("el efecto debe estar entre 1 y 7")
-	case c.Back < 0 || c.Back > 8:
-		return errors.New("el fondo debe estar entre 0 y 8")
+	case c.Back < 0 || c.Back > 12:
+		return errors.New("el fondo debe estar entre 0 y 12")
 	case c.Bright < 0 || c.Bright > 100:
 		return errors.New("el brillo del fondo debe estar entre 0 y 100")
 	case c.Gain < 0.1 || c.Gain > 4:

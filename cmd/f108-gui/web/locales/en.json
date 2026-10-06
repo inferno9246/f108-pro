@@ -169,6 +169,30 @@
     "stop": "Stop",
     "running": "Running",
     "stopped": "Stopped",
-    "started": "Music mode started"
+    "started": "Music mode started",
+    "fore": {
+      "1": "Green / yellow / red",
+      "2": "Rainbow",
+      "3": "Reverse rainbow",
+      "4": "Gradient",
+      "5": "Spectrum cycle",
+      "6": "White",
+      "7": "Red"
+    },
+    "back": {
+      "0": "No background",
+      "1": "Green / yellow / red",
+      "2": "Rainbow",
+      "3": "Reverse rainbow",
+      "4": "Gradient",
+      "5": "Spectrum cycle",
+      "6": "White",
+      "7": "Red",
+      "8": "Orange",
+      "9": "Yellow",
+      "10": "Blue",
+      "11": "Green",
+      "12": "Green (variant)"
+    }
   }
 }

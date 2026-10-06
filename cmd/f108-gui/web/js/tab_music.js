@@ -109,8 +109,12 @@ class TabMusic {
         // Los nombres exactos de cada estilo y fondo se confirman probando en el teclado.
         const styleWord = this.t('music.style_word', 'Estilo');
         const bgWord = this.t('music.bg_word', 'Fondo');
-        for (let n = 1; n <= 7; n++) this.styleSel.add(new Option(`${styleWord} ${n}`, String(n)));
-        for (let n = 0; n <= 8; n++) this.bgSel.add(new Option(`${bgWord} ${n}`, String(n)));
+        for (let n = 1; n <= 7; n++) {
+            this.styleSel.add(new Option(this.t(`music.fore.${n}`, `${styleWord} ${n}`), String(n)));
+        }
+        for (let n = 0; n <= 12; n++) {
+            this.bgSel.add(new Option(this.t(`music.back.${n}`, `${bgWord} ${n}`), String(n)));
+        }
         this.styleSel.value = '2';
         this.bgSel.value = '0';
 

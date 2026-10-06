@@ -254,7 +254,7 @@ func TestConfigValidation(t *testing.T) {
 	for _, bad := range []musicCfg{
 		{Fore: 0, Back: 0, Bright: 100, Gain: 1, Source: "monitor"},
 		{Fore: 8, Back: 0, Bright: 100, Gain: 1, Source: "monitor"},
-		{Fore: 2, Back: 9, Bright: 100, Gain: 1, Source: "monitor"},
+		{Fore: 2, Back: 13, Bright: 100, Gain: 1, Source: "monitor"},
 		{Fore: 2, Back: 0, Bright: 101, Gain: 1, Source: "monitor"},
 		{Fore: 2, Back: 0, Bright: 100, Gain: 0, Source: "monitor"},
 		{Fore: 2, Back: 0, Bright: 100, Gain: 1, Source: "otra"},
