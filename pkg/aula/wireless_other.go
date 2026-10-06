@@ -22,3 +22,7 @@ var ErrNoACK = errors.New("sin ACK del teclado")
 func (d *WirelessDevice) SetLighting(_ LightingConfig) error { return errWirelessUnsupported }
 
 func (d *WirelessDevice) SyncClock(_ time.Time) error { return errWirelessUnsupported }
+
+func (d *WirelessDevice) SendMusicFrame(_, _, _ byte, _ [21]byte) error {
+	return errWirelessUnsupported
+}

@@ -59,6 +59,9 @@ class AppMain {
         this.tabSettings = new window.TabSettings(this);
         this.tabSettings.init();
 
+        this.tabMusic = new window.TabMusic(this);
+        this.tabMusic.init();
+
         // Canvas events
         this.canvas.onKeySelected((keyObj) => this.onKeySelected(keyObj));
         this.canvas.onScreenClicked(() => this.switchTab('lcd'));

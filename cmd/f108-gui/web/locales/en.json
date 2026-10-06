@@ -12,7 +12,8 @@
     "lighting": "Lighting Effects",
     "perkey": "Per-Key RGB",
     "lcd": "TFT Screen & Clock",
-    "settings": "Settings"
+    "settings": "Settings",
+    "music": "Music"
   },
   "home": {
     "welcome": "Welcome to AULA F108 Pro Manager",
@@ -151,5 +152,23 @@
     "executing": "Executing CLI command...",
     "success": "Command executed successfully.",
     "error": "Error executing command:"
+  },
+  "music": {
+    "title": "Music mode",
+    "help": "Makes the keyboard lights react to the sound playing on your computer, like the official software. Press Start and play some music: light bars rise and fall by column, with the bass on the left. This page must stay open while it runs. When stopped, the keyboard should return to its usual lighting.",
+    "style": "Effect style",
+    "style_word": "Style",
+    "bg_mode": "Background",
+    "bg_word": "Background",
+    "bg_bright": "Background brightness",
+    "amplitude": "Amplitude (how much it reacts)",
+    "source": "Audio source",
+    "source_monitor": "What the computer is playing",
+    "source_mic": "Microphone",
+    "start": "Start",
+    "stop": "Stop",
+    "running": "Running",
+    "stopped": "Stopped",
+    "started": "Music mode started"
   }
 }

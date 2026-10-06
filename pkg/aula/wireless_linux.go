@@ -179,3 +179,37 @@ func (d *WirelessDevice) SyncClock(t time.Time) error {
 		0x00, byte(t.Weekday()), 0, 0, 0, 0xAA, 0x55,
 	})
 }
+
+// SendMusicFrame envia un fotograma del modo musica (0B 1C) por el dongle 2.4G.
+// Sin reintentos y con una espera corta de ACK: se manda ~30 veces por segundo y un
+// fotograma perdido no importa. Formato (payload; el offset 0 del paquete es el report ID):
+// 0-2 = 0B 1C 00, 3 = efecto, 4 = fondo, 5 = brillo del fondo (0-100), 6-26 = 21 niveles.
+func (d *WirelessDevice) SendMusicFrame(fore, back, bright byte, levels [21]byte) error {
+	var pkt [33]byte
+	pkt[1], pkt[2] = 0x0B, 0x1C
+	pkt[4], pkt[5], pkt[6] = fore, back, bright
+	copy(pkt[7:28], levels[:])
+	var sum byte
+	for _, b := range pkt[:32] {
+		sum += b
+	}
+	pkt[32] = sum
+
+	buf := make([]byte, 64)
+	for { // vaciar reportes pendientes
+		d.f.SetReadDeadline(time.Now().Add(time.Millisecond))
+		if _, err := d.f.Read(buf); err != nil {
+			break
+		}
+	}
+	if _, err := d.f.Write(pkt[:]); err != nil {
+		return err
+	}
+	for end := time.Now().Add(60 * time.Millisecond); time.Now().Before(end); {
+		d.f.SetReadDeadline(time.Now().Add(10 * time.Millisecond))
+		if n, err := d.f.Read(buf); err == nil && n >= 3 && bytes.Equal(buf[:3], pkt[1:4]) {
+			return nil
+		}
+	}
+	return ErrNoACK
+}

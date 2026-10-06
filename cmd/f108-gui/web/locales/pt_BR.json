@@ -12,7 +12,8 @@
     "lighting": "Efeitos de Luz",
     "perkey": "RGB por Tecla",
     "lcd": "Tela TFT & Relógio",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "music": "Música"
   },
   "home": {
     "welcome": "Bem-vindo ao Gerenciador AULA F108 Pro",
@@ -151,5 +152,23 @@
     "executing": "Executando comando CLI...",
     "success": "Comando executado com sucesso.",
     "error": "Erro ao executar comando:"
+  },
+  "music": {
+    "title": "Modo música",
+    "help": "Faz as luzes do teclado reagirem ao som que sai do seu computador, como no programa oficial. Pressione «Ativar» e toque música: as barras de luz sobem e descem por coluna, com os graves à esquerda. Esta página deve ficar aberta enquanto estiver ativo. Ao parar, o teclado deve voltar à iluminação habitual.",
+    "style": "Estilo do efeito",
+    "style_word": "Estilo",
+    "bg_mode": "Fundo",
+    "bg_word": "Fundo",
+    "bg_bright": "Brilho do fundo",
+    "amplitude": "Amplitude (quanto reage)",
+    "source": "Fonte de áudio",
+    "source_monitor": "O que o computador está tocando",
+    "source_mic": "Microfone",
+    "start": "Ativar",
+    "stop": "Parar",
+    "running": "Ativo",
+    "stopped": "Parado",
+    "started": "Modo música ativado"
   }
 }
