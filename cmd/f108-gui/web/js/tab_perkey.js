@@ -1,172 +1,209 @@
 /**
- * tab_perkey.js - Individual Per-Key RGB Canvas Painter & YAML Manager.
+ * tab_perkey.js - Luz RGB tecla por tecla por el dongle 2.4G.
+ *
+ * Derived from f108-pro-gui (MIT, see THIRD_PARTY.md). En lugar de armar comandos de texto,
+ * envia al servidor un JSON {brightness, keys: {indice_de_luz: "#rrggbb"}}.
  */
 
 class TabPerKey {
     constructor(app) {
         this.app = app;
         this.activeColor = '#00FFCC';
-        this.keyColorMap = new Map(); // keyId -> hexColor
+        this.colors = new Map();   // indice de luz -> "#rrggbb"
+        this.brightness = 5;
         this.isMouseDown = false;
+        this.names = new Map();    // nombre de tecla (del servidor) -> indice de luz
     }
 
-    init() {
-        this.colorPicker = document.getElementById('perkey-color-picker');
-        this.colorHex = document.getElementById('perkey-color-hex');
+    t(key, fallback) {
+        return (window.i18n && window.i18n.t(key, fallback)) || fallback;
+    }
+
+    log(msg, type) {
+        if (this.app.composer && this.app.composer.appendLog) {
+            this.app.composer.appendLog(msg + '\n', type || 'info');
+        } else {
+            console.log(msg);
+        }
+    }
+
+    keys() {
+        return (this.app.canvas && this.app.canvas.keysData) ? this.app.canvas.keysData.keys : [];
+    }
+
+    keyById(id) { return this.keys().find(k => k.id === id) || null; }
+    keyByIndex(idx) { return this.keys().find(k => k.light_index === idx) || null; }
+
+    async init() {
+        this.picker = document.getElementById('perkey-color-picker');
+        this.hex = document.getElementById('perkey-color-hex');
         this.applyBtn = document.getElementById('btn-apply-perkey');
         this.clearBtn = document.getElementById('btn-perkey-clear');
-        this.exportBtn = document.getElementById('btn-perkey-export');
-        this.importBtn = document.getElementById('btn-perkey-import');
 
-        // Color input changes
-        this.colorPicker.addEventListener('input', (e) => {
-            this.activeColor = e.target.value;
-            this.colorHex.value = this.activeColor.toUpperCase();
-        });
-        this.colorHex.addEventListener('change', (e) => {
-            this.activeColor = e.target.value;
-            this.colorPicker.value = this.activeColor;
+        // Exportar/importar YAML todavia no esta disponible en esta version.
+        ['btn-perkey-export', 'btn-perkey-import'].forEach(id => {
+            const b = document.getElementById(id);
+            if (b) b.style.display = 'none';
         });
 
-        // Setup mouse drag painting on canvas keycaps
-        this.setupCanvasPainting();
+        this.buildExtras();
 
-        // Zone Preset Buttons
-        document.getElementById('preset-wasd').addEventListener('click', () => this.applyPresetWasd());
-        document.getElementById('preset-numpad').addEventListener('click', () => this.applyPresetNumpad());
-        document.getElementById('preset-rainbow').addEventListener('click', () => this.applyPresetRainbow());
-
-        // Actions
-        this.applyBtn.addEventListener('click', () => this.applyPerKeyRgb());
+        this.picker.addEventListener('input', (e) => {
+            this.activeColor = e.target.value.toUpperCase();
+            this.hex.value = this.activeColor;
+        });
+        this.hex.addEventListener('change', (e) => {
+            if (/^#[0-9a-fA-F]{6}$/.test(e.target.value)) {
+                this.activeColor = e.target.value.toUpperCase();
+                this.picker.value = this.activeColor;
+            }
+        });
+        document.getElementById('preset-wasd').addEventListener('click', () => this.presetWasd());
+        document.getElementById('preset-numpad').addEventListener('click', () => this.presetNumpad());
+        document.getElementById('preset-rainbow').addEventListener('click', () => this.presetRainbow());
         this.clearBtn.addEventListener('click', () => this.clearAll());
-        this.exportBtn.addEventListener('click', () => this.exportYaml());
-        this.importBtn.addEventListener('click', () => this.importYaml());
+        this.fillBtn.addEventListener('click', () => this.fillAll());
+        this.applyBtn.addEventListener('click', () => this.apply());
+        this.brightInput.addEventListener('input', () => {
+            this.brightness = parseInt(this.brightInput.value, 10);
+            this.brightVal.textContent = String(this.brightness);
+        });
+
+        this.setupCanvasPainting();
+        try {
+            await this.loadNames();
+            await this.loadState();
+        } catch (e) {
+            this.log(`[ERROR] ${e.message}`, 'error');
+        }
+    }
+
+    buildExtras() {
+        const grid = this.picker.closest('.controls-grid');
+        const g = document.createElement('div');
+        g.className = 'form-group';
+        g.innerHTML = `
+            <label><span data-i18n="perkey.brightness">Brillo (0 - 5)</span>: <span class="slider-val" id="perkey-bright-val">5</span></label>
+            <div class="slider-group"><input type="range" id="perkey-bright" min="0" max="5" value="5"></div>`;
+        grid.appendChild(g);
+        this.brightInput = g.querySelector('#perkey-bright');
+        this.brightVal = g.querySelector('#perkey-bright-val');
+
+        this.fillBtn = document.createElement('button');
+        this.fillBtn.className = 'btn btn-secondary';
+        this.fillBtn.id = 'btn-perkey-fill';
+        this.fillBtn.setAttribute('data-i18n', 'perkey.fill_all');
+        this.fillBtn.textContent = this.t('perkey.fill_all', 'Pintar todas las teclas');
+        this.clearBtn.parentElement.insertBefore(this.fillBtn, this.clearBtn);
+        if (window.i18n) window.i18n.applyTranslations(grid.parentElement);
+    }
+
+    async loadNames() {
+        const res = await fetch('/api/keys', { headers: { 'X-Token': window.hostBridge.token } });
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        (await res.json()).forEach(k => this.names.set(k.name, k.index));
+    }
+
+    async loadState() {
+        const st = await window.hostBridge.invoke('perkey_state', {});
+        this.brightness = Math.min(5, Math.max(0, st.brightness | 0));
+        this.brightInput.value = String(this.brightness);
+        this.brightVal.textContent = String(this.brightness);
+        Object.entries(st.keys || {}).forEach(([idx, color]) => {
+            const k = this.keyByIndex(parseInt(idx, 10));
+            if (k) this.paintKey(k.id, color);
+        });
     }
 
     setupCanvasPainting() {
         const stage = document.getElementById('keyboard-stage-container');
-        
+        if (!stage) return;
         stage.addEventListener('mousedown', () => { this.isMouseDown = true; });
         window.addEventListener('mouseup', () => { this.isMouseDown = false; });
-
         stage.addEventListener('mouseover', (e) => {
-            if (this.app.activeTab !== 'perkey' || !this.isMouseDown) return;
+            if (!this.isMouseDown || this.app.activeTab !== 'perkey') return;
             const btn = e.target.closest('.keycap');
-            if (btn && btn.dataset.id) {
-                this.paintKey(btn.dataset.id, this.activeColor);
-            }
+            if (btn && !btn.disabled) this.paintKey(btn.dataset.id, this.activeColor);
         });
     }
 
+    // Se llama desde AppMain.onKeySelected (clic) y al arrastrar sobre las teclas.
     paintKey(keyId, color) {
-        this.keyColorMap.set(keyId, color);
-        this.app.canvas.setKeyLed(keyId, color);
-        this.updateCommand();
+        const k = this.keyById(keyId);
+        if (!k) return;
+        const hex = color.toLowerCase();
+        this.colors.set(k.light_index, hex);
+        this.app.canvas.setKeyLed(keyId, hex);
+    }
+
+    paintNames(names, color) {
+        names.forEach(n => {
+            const idx = this.names.get(n);
+            const k = idx === undefined ? null : this.keyByIndex(idx);
+            if (k) this.paintKey(k.id, color);
+        });
     }
 
     clearAll() {
-        this.keyColorMap.clear();
+        this.colors.clear();
         this.app.canvas.clearAllLeds();
-        this.app.composer.setCommand('f108-pro off');
     }
 
-    applyPresetWasd() {
-        this.clearAll();
-        // Paint WASD red
-        ['W', 'A', 'S', 'D'].forEach(k => this.paintKey(k, '#FF0033'));
-        // Paint Arrows cyan
-        ['UP', 'DOWN', 'LEFT', 'RIGHT'].forEach(k => this.paintKey(k, '#00F0FF'));
-        // Paint 1-4 yellow
-        ['1', '2', '3', '4'].forEach(k => this.paintKey(k, '#FFD700'));
+    fillAll() {
+        const valid = new Set(this.names.values());
+        this.keys().forEach(k => {
+            if (valid.has(k.light_index)) this.paintKey(k.id, this.activeColor);
+        });
     }
 
-    applyPresetNumpad() {
+    presetWasd() {
         this.clearAll();
-        const numKeys = ['NUMLOCK', 'KP_DIVIDE', 'KP_MULTIPLY', 'KP_MINUS', 'KP_PLUS', 'KP_ENTER',
-                         'KP_0', 'KP_1', 'KP_2', 'KP_3', 'KP_4', 'KP_5', 'KP_6', 'KP_7', 'KP_8', 'KP_9', 'KP_DOT'];
-        numKeys.forEach(k => this.paintKey(k, '#10B981'));
+        this.paintNames(['w', 'a', 's', 'd'], '#FF0033');
+        this.paintNames(['up', 'down', 'left', 'right'], '#00F0FF');
+        this.paintNames(['1', '2', '3', '4'], '#FFD700');
     }
 
-    applyPresetRainbow() {
+    presetNumpad() {
         this.clearAll();
-        const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
-        if (this.app.canvas.keysData) {
-            this.app.canvas.keysData.keys.forEach((k, idx) => {
-                const c = colors[idx % colors.length];
-                this.paintKey(k.id, c);
-            });
-        }
+        const names = ['numlock', 'numslash', 'numstar', 'numminus', 'numplus', 'numenter', 'numdot'];
+        for (let n = 0; n <= 9; n++) names.push('num' + n);
+        this.paintNames(names, '#10B981');
+    }
+
+    presetRainbow() {
+        this.clearAll();
+        const valid = new Set(this.names.values());
+        this.keys().forEach(k => {
+            if (valid.has(k.light_index)) this.paintKey(k.id, this.hslToHex(Math.round(300 * k.rect.x / 800), 100, 50));
+        });
+    }
+
+    hslToHex(h, s, l) {
+        s /= 100; l /= 100;
+        const a = s * Math.min(l, 1 - l);
+        const f = (n) => {
+            const k = (n + h / 30) % 12;
+            const c = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+            return Math.round(255 * c).toString(16).padStart(2, '0');
+        };
+        return `#${f(0)}${f(8)}${f(4)}`;
     }
 
     updateCommand() {
-        if (this.keyColorMap.size === 0) {
-            this.app.composer.setCommand('f108-pro perkey --help');
-            return;
-        }
-
-        // Compose quartet command if few keys, or YAML if many
-        if (this.keyColorMap.size <= 6) {
-            const parts = [];
-            this.keyColorMap.forEach((hex, id) => {
-                const rgb = this.app.hexToRgb(hex);
-                parts.push(`${id} ${rgb.r} ${rgb.g} ${rgb.b}`);
-            });
-            this.app.composer.setCommand(`f108-pro perkey ${parts.join(' ')}`);
-        } else {
-            this.app.composer.setCommand(`f108-pro perkey custom_profile.yaml`);
-        }
+        if (this.app.composer) this.app.composer.setCommand('f108-pro perkey --help');
     }
 
-    generateYaml() {
-        let yaml = "# AULA F108 Pro Per-Key RGB Configuration\nbrightness: 5\nall: [0, 0, 0]\nkeys:\n";
-        this.keyColorMap.forEach((hex, id) => {
-            const rgb = this.app.hexToRgb(hex);
-            yaml += `  ${id}: [${rgb.r}, ${rgb.g}, ${rgb.b}]\n`;
-        });
-        return yaml;
-    }
-
-    async applyPerKeyRgb() {
-        if (this.keyColorMap.size === 0) return;
+    async apply() {
+        const keys = {};
+        this.colors.forEach((hex, idx) => { keys[String(idx)] = hex; });
+        this.applyBtn.disabled = true;
         try {
-            const yaml = this.generateYaml();
-            const tmpPath = "/tmp/f108_perkey_active.yaml";
-            await window.hostBridge.invoke('write_file', { path: tmpPath, content: yaml });
-            this.app.composer.setCommand(`f108-pro perkey ${tmpPath}`);
-            await this.app.composer.runCurrentCommand();
+            await window.hostBridge.invoke('perkey_apply', { brightness: this.brightness, keys });
+            this.log(`[OK] ${this.t('perkey.applied', 'Luz por tecla aplicada')} (${this.colors.size} ${this.t('perkey.keys_word', 'teclas')})`);
         } catch (e) {
-            console.error('Failed to apply per-key RGB:', e);
-        }
-    }
-
-    async exportYaml() {
-        try {
-            const fileRes = await window.hostBridge.invoke('save_file_dialog', {
-                title: 'Export Per-Key RGB Profile',
-                default_name: 'f108_rgb_profile.yaml'
-            });
-            if (fileRes && fileRes.path) {
-                const yaml = this.generateYaml();
-                await window.hostBridge.invoke('write_file', { path: fileRes.path, content: yaml });
-                this.app.composer.appendLog(`[OK] Per-Key RGB profile exported to: ${fileRes.path}\n`, 'info');
-            }
-        } catch (e) {
-            console.error('Export failed:', e);
-        }
-    }
-
-    async importYaml() {
-        try {
-            const fileRes = await window.hostBridge.invoke('open_file_dialog', {
-                title: 'Import Per-Key RGB Profile',
-                filter: 'yaml'
-            });
-            if (fileRes && fileRes.path) {
-                this.app.composer.setCommand(`f108-pro perkey ${fileRes.path}`);
-                await this.app.composer.runCurrentCommand();
-            }
-        } catch (e) {
-            console.error('Import failed:', e);
+            this.log(`[ERROR] ${e.message}`, 'error');
+        } finally {
+            this.applyBtn.disabled = false;
         }
     }
 }

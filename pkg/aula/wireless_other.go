@@ -26,3 +26,7 @@ func (d *WirelessDevice) SyncClock(_ time.Time) error { return errWirelessUnsupp
 func (d *WirelessDevice) SendMusicFrame(_, _, _ byte, _ [21]byte) error {
 	return errWirelessUnsupported
 }
+
+func (d *WirelessDevice) Battery() (int, error) { return 0, errWirelessUnsupported }
+
+func (d *WirelessDevice) SetPerKeyRGB(_ []KeyColor, _ uint8) error { return errWirelessUnsupported }

@@ -10,7 +10,7 @@
     "home": "Inicio",
     "remap": "Remapeo de teclas",
     "lighting": "Iluminación",
-    "perkey": "RGB por tecla (próximamente)",
+    "perkey": "RGB por tecla",
     "lcd": "Pantalla y reloj (próximamente)",
     "settings": "Ajustes",
     "music": "Música"
@@ -108,7 +108,10 @@
     "clear_all": "Borrar todo (apagado)",
     "export_yaml": "Exportar YAML por tecla",
     "import_yaml": "Importar YAML por tecla",
-    "apply": "Enviar RGB por tecla"
+    "apply": "Enviar RGB por tecla",
+    "brightness": "Brillo (0 - 5)",
+    "applied": "Luz por tecla aplicada",
+    "keys_word": "teclas"
   },
   "lcd": {
     "title": "Pantalla TFT (240x135) y reloj",

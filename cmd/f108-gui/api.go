@@ -70,6 +70,12 @@ func handleInvoke(w http.ResponseWriter, r *http.Request) {
 		data, err = musicStop()
 	case "music_status":
 		data, err = musicStatus()
+	case "battery":
+		data, err = batteryStatus()
+	case "perkey_state":
+		data, err = perkeyStateHandler()
+	case "perkey_apply":
+		data, err = perkeyApply(req.Payload)
 	case "get_device_status":
 		data = map[string]bool{
 			"usb_connected":    usbPresent("0c45", "800a"),

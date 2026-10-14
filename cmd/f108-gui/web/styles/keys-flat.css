@@ -43,3 +43,7 @@
 .keyboard-stage .keycap.locked { cursor: not-allowed; opacity: .45 !important; }
 .keyboard-stage.con-foto .keycap.locked { opacity: 1 !important; }
 .keyboard-stage.con-foto .keycap.locked:hover { background: rgba(239,68,68,.28) !important; border-color: rgba(239,68,68,.7) !important; }
+
+/* v3: led (simulacion del color de cada tecla en la pestaña RGB por tecla) */
+.keyboard-stage .keycap.led-active { background: var(--key-led-color) !important; box-shadow: 0 0 10px var(--key-led-color); }
+.keyboard-stage.con-foto .keycap.led-active { background: color-mix(in srgb, var(--key-led-color) 55%, transparent) !important; }

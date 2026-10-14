@@ -108,7 +108,10 @@
     "clear_all": "Limpar Tudo (Apagar)",
     "export_yaml": "Exportar YAML Per-Key",
     "import_yaml": "Importar YAML Per-Key",
-    "apply": "Gravar RGB Individual"
+    "apply": "Gravar RGB Individual",
+    "brightness": "Brilho (0 - 5)",
+    "applied": "Luz por tecla aplicada",
+    "keys_word": "teclas"
   },
   "lcd": {
     "title": "Tela TFT (240x135) & Relógio em Tempo Real",

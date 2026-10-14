@@ -213,3 +213,95 @@ func (d *WirelessDevice) SendMusicFrame(fore, back, bright byte, levels [21]byte
 	}
 	return ErrNoACK
 }
+
+// wirelessPacket arma el paquete de 33 bytes: [0] report ID, [1..31] payload, [32] checksum.
+func wirelessPacket(payload []byte) [33]byte {
+	var pkt [33]byte
+	copy(pkt[1:32], payload)
+	var sum byte
+	for _, b := range pkt[:32] {
+		sum += b
+	}
+	pkt[32] = sum
+	return pkt
+}
+
+// request envia un paquete y devuelve la respuesta cuya cabecera (3 bytes) coincide.
+func (d *WirelessDevice) request(payload []byte) ([]byte, error) {
+	pkt := wirelessPacket(payload)
+	buf := make([]byte, 64)
+	for { // vaciar reportes pendientes
+		d.f.SetReadDeadline(time.Now().Add(time.Millisecond))
+		if _, err := d.f.Read(buf); err != nil {
+			break
+		}
+	}
+	if _, err := d.f.Write(pkt[:]); err != nil {
+		return nil, err
+	}
+	for end := time.Now().Add(400 * time.Millisecond); time.Now().Before(end); {
+		d.f.SetReadDeadline(time.Now().Add(20 * time.Millisecond))
+		if n, err := d.f.Read(buf); err == nil && n >= 4 && bytes.Equal(buf[:3], pkt[1:4]) {
+			return append([]byte(nil), buf[:n]...), nil
+		}
+	}
+	return nil, ErrNoACK
+}
+
+// Battery pregunta el nivel de bateria (comando 20 01; el byte 3 de la respuesta es el
+// porcentaje, igual que en las capturas del software oficial).
+func (d *WirelessDevice) Battery() (int, error) {
+	resp, err := d.request([]byte{0x20, 0x01})
+	if err != nil {
+		return 0, err
+	}
+	if resp[3] > 100 {
+		return 0, fmt.Errorf("respuesta de bateria inesperada: %d", resp[3])
+	}
+	return int(resp[3]), nil
+}
+
+// perKeyPackets arma la secuencia del software oficial (reconstruida de una captura):
+// 05 10 con modo 0x80 (luz de usuario) y brillo 0-5, luego 20 trozos 14 1C de 28 bytes
+// (560 bytes = ranuras de 4 bytes [indice, R, G, B] en el offset indice*4) y 14 10 14.
+func perKeyPackets(keys []KeyColor, brightness uint8) [][]byte {
+	mode := make([]byte, 19)
+	copy(mode, []byte{0x05, 0x10, 0x00, 0x80})
+	mode[12] = brightness
+	mode[17], mode[18] = 0xAA, 0x55
+
+	var buf [560]byte
+	for _, k := range keys {
+		i := int(k.LightIndex) * 4
+		buf[i], buf[i+1], buf[i+2], buf[i+3] = k.LightIndex, k.R, k.G, k.B
+	}
+	out := [][]byte{mode}
+	for c := 0; c < 20; c++ {
+		p := append([]byte{0x14, 0x1C, byte(c)}, buf[c*28:(c+1)*28]...)
+		out = append(out, p)
+	}
+	fin := make([]byte, 19)
+	copy(fin, []byte{0x14, 0x10, 0x14})
+	fin[17], fin[18] = 0xAA, 0x55
+	return append(out, fin)
+}
+
+// SetPerKeyRGB envia el color de cada tecla por el dongle 2.4G (luz de usuario).
+// Las teclas que no se indican quedan apagadas.
+func (d *WirelessDevice) SetPerKeyRGB(keys []KeyColor, brightness uint8) error {
+	if brightness > 5 {
+		return fmt.Errorf("invalid brightness %d (valid range: 0-5)", brightness)
+	}
+	for _, k := range keys {
+		if int(k.LightIndex)*4+3 >= 560 {
+			return fmt.Errorf("light index %d out of range", k.LightIndex)
+		}
+	}
+	for n, p := range perKeyPackets(keys, brightness) {
+		if err := d.send(p); err != nil {
+			return fmt.Errorf("paquete %d: %w (si el teclado estaba en reposo, pulsa una tecla y reintenta)", n+1, err)
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	return nil
+}

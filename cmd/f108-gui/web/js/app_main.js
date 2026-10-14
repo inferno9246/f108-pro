@@ -74,7 +74,7 @@ class AppMain {
         this.setupNavigation();
 
         // Solo Remap funciona en esta versión: el resto se desactiva y se abre Remap.
-        ['perkey', 'lcd'].forEach(id => {
+        ['lcd'].forEach(id => {
             const b = document.querySelector('.nav-item[data-tab="' + id + '"]');
             if (b) { b.classList.add('disabled'); b.title = 'Próximamente'; b.style.opacity = '0.4'; b.style.pointerEvents = 'none'; }
         });
@@ -100,7 +100,7 @@ class AppMain {
         this.activeTab = tabId;
         // Teclado visible solo en Remap
         const kb = document.getElementById('keyboard-stage-container');
-        if (kb) kb.style.display = (tabId === 'remap') ? '' : 'none';
+        if (kb) kb.style.display = (tabId === 'remap' || tabId === 'perkey') ? '' : 'none';
 
         document.querySelectorAll('.nav-item').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);

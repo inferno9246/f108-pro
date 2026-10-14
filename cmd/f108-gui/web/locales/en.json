@@ -108,7 +108,10 @@
     "clear_all": "Clear All (Off)",
     "export_yaml": "Export Per-Key YAML",
     "import_yaml": "Import Per-Key YAML",
-    "apply": "Flash Per-Key RGB"
+    "apply": "Flash Per-Key RGB",
+    "brightness": "Brightness (0 - 5)",
+    "applied": "Per-key lighting applied",
+    "keys_word": "keys"
   },
   "lcd": {
     "title": "TFT Display (240x135) & Real-Time Clock",
