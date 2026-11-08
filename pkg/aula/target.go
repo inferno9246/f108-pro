@@ -3,11 +3,13 @@ package aula
 import (
 	"fmt"
 	"sort"
+	"strconv"
 	"strings"
 )
 
 // ParseRemapTarget converts a destination specifier into a KeyRemap.
-// Formats: key name ("a"), "media:play", "mouse:lclick", "combo:ctrl+c".
+// Formats: key name ("a"), "media:play", "mouse:lclick", "combo:ctrl+c",
+// "macro:N", "macro:N:times:K", "macro:N:toggle" and "macro:N:hold".
 func ParseRemapTarget(srcIdx uint8, spec string) (KeyRemap, error) {
 	spec = strings.ToLower(strings.TrimSpace(spec))
 
@@ -29,6 +31,30 @@ func ParseRemapTarget(srcIdx uint8, spec string) (KeyRemap, error) {
 
 	if expr, ok := strings.CutPrefix(spec, "combo:"); ok {
 		return parseComboExpr(srcIdx, expr)
+	}
+	if expr, ok := strings.CutPrefix(spec, "macro:"); ok {
+		parts := strings.Split(expr, ":")
+		n, err := strconv.Atoi(parts[0])
+		if err != nil || n < 0 || n >= 100 {
+			return KeyRemap{}, fmt.Errorf("número de macro inválido: %q (0-99)", parts[0])
+		}
+		r := KeyRemap{SourceIndex: srcIdx, Action: RemapMacro, Param1: byte(n)}
+		switch {
+		case len(parts) == 1:
+		case len(parts) == 2 && parts[1] == "toggle":
+			r.Param2 = 2
+		case len(parts) == 2 && parts[1] == "hold":
+			r.Param2, r.Param3 = 3, 1
+		case len(parts) == 3 && parts[1] == "times":
+			count, err := strconv.Atoi(parts[2])
+			if err != nil || count < 1 || count > 255 {
+				return KeyRemap{}, fmt.Errorf("repeticiones inválidas: %q (1-255)", parts[2])
+			}
+			r.Param2, r.Param3 = 1, byte(count)
+		default:
+			return KeyRemap{}, fmt.Errorf("destino de macro inválido: %q", spec)
+		}
+		return r, nil
 	}
 
 	dstHID, ok := KeyNameToHID[spec]

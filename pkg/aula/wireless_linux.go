@@ -305,3 +305,22 @@ func (d *WirelessDevice) SetPerKeyRGB(keys []KeyColor, brightness uint8) error {
 	}
 	return nil
 }
+
+// SendMacros sustituye la tabla completa. Valida todos los eventos antes del primer envío.
+func (d *WirelessDevice) SendMacros(macros [][]MacroEvent) error {
+	table, err := BuildMacroTable(macros)
+	if err != nil {
+		return err
+	}
+	packets, err := MacroPackets(table)
+	if err != nil {
+		return err
+	}
+	for i, p := range packets {
+		if err := d.send(p); err != nil {
+			return fmt.Errorf("trozo de macros %d/%d: %w", i+1, len(packets), err)
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	return nil
+}
