@@ -449,6 +449,16 @@ func TestParseRemapTarget_Combo(t *testing.T) {
 	}
 }
 
+func TestParseRemapTarget_Macro(t *testing.T) {
+	r, err := parseRemapTarget(aula.KeyNameToIndex["insert"], "macro:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r.Action != aula.RemapMacro || r.Param1 != 0 || r.Param2 != 0 || r.Param3 != 0 {
+		t.Fatalf("destino de macro inesperado: %+v", r)
+	}
+}
+
 func TestParseRemapTarget_UnknownKey(t *testing.T) {
 	_, err := parseRemapTarget(1, "nonexistent")
 	if err == nil {

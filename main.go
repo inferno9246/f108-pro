@@ -506,6 +506,9 @@ func parseRemapTarget(srcIdx uint8, spec string) (aula.KeyRemap, error) {
 		expr := strings.TrimPrefix(spec, "combo:")
 		return parseComboExpr(srcIdx, expr)
 	}
+	if strings.HasPrefix(spec, "macro:") {
+		return aula.ParseRemapTarget(srcIdx, spec)
+	}
 
 	// Default: key-to-key swap.
 	dstHID, ok := aula.KeyNameToHID[spec]
