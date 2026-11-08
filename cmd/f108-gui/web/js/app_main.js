@@ -45,7 +45,10 @@ class AppMain {
 
         // 4. Instantiate and initialize Tab Controllers
         this.tabRemap = new window.TabRemap(this);
-        this.tabRemap.init();
+        await this.tabRemap.init();
+
+        this.tabMacros = new window.TabMacros(this);
+        await this.tabMacros.init();
 
         this.tabLighting = new window.TabLighting(this);
         this.tabLighting.init();
@@ -73,7 +76,7 @@ class AppMain {
         // 6. Setup Navigation & Preferences
         this.setupNavigation();
 
-        // Solo Remap funciona en esta versión: el resto se desactiva y se abre Remap.
+        // La carga de imágenes LCD queda fuera de esta interfaz 2.4G.
         ['lcd'].forEach(id => {
             const b = document.querySelector('.nav-item[data-tab="' + id + '"]');
             if (b) { b.classList.add('disabled'); b.title = 'Próximamente'; b.style.opacity = '0.4'; b.style.pointerEvents = 'none'; }
@@ -97,9 +100,10 @@ class AppMain {
     }
 
     switchTab(tabId) {
+        if (this.activeTab === 'macros' && tabId !== 'macros') this.tabMacros.stopRecord();
         this.activeTab = tabId;
-        // Teclado visible solo en Remap
-        const kb = document.getElementById('keyboard-stage-container');
+        // El lienzo completo solo ocupa espacio en remapeo y RGB por tecla.
+        const kb = document.querySelector('.canvas-wrapper');
         if (kb) kb.style.display = (tabId === 'remap' || tabId === 'perkey') ? '' : 'none';
 
         document.querySelectorAll('.nav-item').forEach(b => {
@@ -120,6 +124,8 @@ class AppMain {
             this.tabRemap.updateCommand();
         } else if (tabId === 'perkey') {
             this.tabPerKey.updateCommand();
+        } else if (tabId === 'macros') {
+            this.composer.setCommand('f108-pro remap --wireless insert macro:0');
         }
     }
 
@@ -270,8 +276,8 @@ class AppMain {
                 detail.style.color = 'var(--success)';
             } else if (status.dongle_connected) {
                 dot.className = 'status-dot';
-                text.textContent = '2.4G inalámbrico (remapeo disponible)';
-                detail.textContent = 'Conectado por el dongle 2.4G (05ac:024f): el remapeo funciona por aquí; el resto necesita el cable USB';
+                text.textContent = '2.4G inalámbrico';
+                detail.textContent = 'Dongle 2.4G (05ac:024f): remapeo, macros, iluminación, música, RGB por tecla, batería y reloj';
                 detail.style.color = 'var(--warning)';
             } else {
                 dot.className = 'status-dot disconnected';

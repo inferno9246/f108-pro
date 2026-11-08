@@ -11,13 +11,14 @@
     "remap": "Key Remap",
     "lighting": "Lighting Effects",
     "perkey": "Per-Key RGB",
-    "lcd": "TFT Screen & Clock",
+    "lcd": "LCD images (USB only)",
     "settings": "Settings",
-    "music": "Music"
+    "music": "Music",
+    "macros": "Macros"
   },
   "home": {
     "welcome": "Welcome to AULA F108 Pro Manager",
-    "desc": "Select a category on the left navigation to customize your keyboard lighting, key assignments, and TFT screen. All actions generate real-time, independent CLI commands shown in the bottom console.",
+    "desc": "Over 2.4G you can use remapping, macros, lighting, music, per-key RGB, battery status and clock sync. LCD images require USB cable and are not managed here.",
     "firmware": "Firmware Version",
     "connection": "Connection Mode",
     "wired_mode": "USB Wired (Full Feature Reports)",
@@ -197,5 +198,19 @@
       "11": "Green",
       "12": "Green (variant)"
     }
+  },
+  "macros": {
+    "title": "2.4G macros",
+    "help": "Create macros, send the full table, then assign them to a key. Sending replaces every macro stored on the keyboard. Wake the keyboard with a key press if it does not acknowledge the transfer.",
+    "list": "Macro", "name": "Name (40 characters maximum)", "add": "Add macro", "up": "Move up", "down": "Move down", "delete": "Delete",
+    "order_warning": "The list position is the macro number. Deleting or moving macros can change what assigned keys run; review assignments after sending.",
+    "events": "Events", "event_type": "Add event", "down_event": "Key down", "up_event": "Key up", "delay_event": "Delay", "tap_event": "Key press", "text_event": "Text",
+    "key": "Key", "ms": "Milliseconds (10–65535)", "text": "Text (a–z, 0–9)", "add_event": "Add event", "record": "Record keys", "stop_record": "Stop recording",
+    "recording": "Recording… press keys on this page; click to stop", "size": "Table size", "bytes": "bytes", "event_count": "events", "too_large": "Limit exceeded",
+    "send": "Send full table", "sent": "Macro table sent", "assign_title": "Assign to a key", "layer": "Layer", "normal": "Normal", "fn": "FN",
+    "mode": "Mode", "once": "Once", "times": "N times", "toggle": "Toggle", "hold": "While held", "count": "Repetitions (1–255)", "bind": "Assign macro",
+    "send_first": "Send the table before assigning. List edits require another send.", "default_name": "Macro", "unnamed": "Unnamed", "remove_event": "Remove event",
+    "limit": "Maximum 100 macros", "invalid_ms": "Invalid delay (10–65535 ms)", "invalid_text": "Text: only a–z and 0–9", "invalid_count": "Repetitions: 1–255",
+    "last_warning": "Deleting all macros awaits an official capture of the empty table"
   }
 }

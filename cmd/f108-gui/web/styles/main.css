@@ -347,6 +347,9 @@ input[type="range"] {
   transform: translateY(0);
 }
 
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn:disabled:hover { box-shadow: none; transform: none; }
+
 .btn-secondary {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--panel-border);
@@ -373,6 +376,17 @@ input[type="range"] {
   align-items: center;
   flex-wrap: wrap;
 }
+
+.nav-symbol { width: 20px; text-align: center; font-size: 18px; }
+.macro-row { margin-top: 14px; }
+.macro-help, .macro-note { color: var(--text-muted); font-size: 12px; line-height: 1.5; margin-top: 10px; }
+.macro-events { display: grid; gap: 6px; margin-left: 20px; max-height: 260px; overflow-y: auto; }
+.macro-events li { padding: 5px 8px; border: 1px solid var(--panel-border); border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.macro-events code { user-select: text; overflow-wrap: anywhere; }
+.macro-events button { padding: 2px 8px; }
+.macro-error { color: var(--error); }
+#pane-macros [hidden] { display: none !important; }
+#macro-record-status { font-size: 12px; color: var(--accent-hover); }
 
 /* Scrollbars */
 ::-webkit-scrollbar {

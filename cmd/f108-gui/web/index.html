@@ -63,6 +63,10 @@
           <img src="../assets/icons/tab_customkey.png" alt="Remap">
           <span data-i18n="nav.remap">Key Remap</span>
         </button>
+        <button class="nav-item" data-tab="macros">
+          <span aria-hidden="true" class="nav-symbol">⌨</span>
+          <span data-i18n="nav.macros">Macros</span>
+        </button>
         <button class="nav-item" data-tab="lighting">
           <img src="../assets/icons/tab_light.png" alt="Lighting">
           <span data-i18n="nav.lighting">Lighting Effects</span>
@@ -162,6 +166,81 @@
               <button class="btn btn-secondary" id="btn-export-yaml" data-i18n="remap.export_yaml">Export YAML</button>
               <button class="btn btn-secondary" id="btn-import-yaml" data-i18n="remap.import_yaml">Import YAML</button>
             </div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-macros">
+          <div class="card">
+            <h2 class="card-title" data-i18n="macros.title">Macros 2.4G</h2>
+            <p class="macro-help" data-i18n="macros.help"></p>
+            <div class="controls-grid">
+              <div class="form-group">
+                <label for="macro-select" data-i18n="macros.list">Macro</label>
+                <select id="macro-select"></select>
+              </div>
+              <div class="form-group">
+                <label for="macro-name" data-i18n="macros.name">Nombre</label>
+                <input id="macro-name" type="text" maxlength="40">
+              </div>
+            </div>
+            <div class="btn-row macro-row">
+              <button class="btn btn-secondary" id="macro-add" data-i18n="macros.add">Añadir macro</button>
+              <button class="btn btn-secondary" id="macro-up" data-i18n="macros.up">Subir</button>
+              <button class="btn btn-secondary" id="macro-down" data-i18n="macros.down">Bajar</button>
+              <button class="btn btn-secondary" id="macro-delete" data-i18n="macros.delete">Eliminar</button>
+            </div>
+            <p class="macro-note" data-i18n="macros.order_warning"></p>
+          </div>
+
+          <div class="card" id="macro-editor">
+            <h2 class="card-title" data-i18n="macros.events">Eventos</h2>
+            <ol id="macro-events" class="macro-events"></ol>
+            <div class="controls-grid macro-row">
+              <div class="form-group">
+                <label for="macro-event-type" data-i18n="macros.event_type">Añadir evento</label>
+                <select id="macro-event-type">
+                  <option value="down" data-i18n="macros.down_event">Tecla abajo</option>
+                  <option value="up" data-i18n="macros.up_event">Tecla arriba</option>
+                  <option value="delay" data-i18n="macros.delay_event">Pausa</option>
+                  <option value="tap" data-i18n="macros.tap_event">Pulsación</option>
+                  <option value="text" data-i18n="macros.text_event">Texto</option>
+                </select>
+              </div>
+              <div class="form-group" id="macro-key-group">
+                <label for="macro-event-key" data-i18n="macros.key">Tecla</label>
+                <select id="macro-event-key"></select>
+              </div>
+              <div class="form-group" id="macro-ms-group">
+                <label for="macro-event-ms" data-i18n="macros.ms">Milisegundos (10–65535)</label>
+                <input id="macro-event-ms" type="number" min="10" max="65535" value="10">
+              </div>
+              <div class="form-group" id="macro-text-group">
+                <label for="macro-event-text" data-i18n="macros.text">Texto (a–z, 0–9)</label>
+                <input id="macro-event-text" type="text" autocomplete="off">
+              </div>
+            </div>
+            <div class="btn-row macro-row">
+              <button class="btn btn-secondary" id="macro-add-event" data-i18n="macros.add_event">Añadir evento</button>
+              <button class="btn btn-secondary" id="macro-record" data-i18n="macros.record">Grabar teclas</button>
+              <span id="macro-record-status" role="status"></span>
+            </div>
+            <p id="macro-size" class="macro-note" role="status"></p>
+            <div class="btn-row macro-row">
+              <button class="btn" id="macro-send" data-i18n="macros.send">Enviar tabla completa</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title" data-i18n="macros.assign_title">Asignar a una tecla</h2>
+            <div class="controls-grid">
+              <div class="form-group"><label for="macro-bind-macro" data-i18n="macros.list">Macro</label><select id="macro-bind-macro"></select></div>
+              <div class="form-group"><label for="macro-bind-key" data-i18n="macros.key">Tecla</label><select id="macro-bind-key"></select></div>
+              <div class="form-group"><label for="macro-bind-layer" data-i18n="macros.layer">Capa</label><select id="macro-bind-layer"><option value="normal" data-i18n="macros.normal">Normal</option><option value="fn" data-i18n="macros.fn">FN</option></select></div>
+              <div class="form-group"><label for="macro-bind-mode" data-i18n="macros.mode">Modo</label><select id="macro-bind-mode"><option value="once" data-i18n="macros.once">Una vez</option><option value="times" data-i18n="macros.times">N veces</option><option value="toggle" data-i18n="macros.toggle">Alternar</option><option value="hold" data-i18n="macros.hold">Mientras se mantiene</option></select></div>
+              <div class="form-group" id="macro-bind-count-group"><label for="macro-bind-count" data-i18n="macros.count">Repeticiones (1–255)</label><input id="macro-bind-count" type="number" min="1" max="255" value="2"></div>
+            </div>
+            <div class="btn-row macro-row"><button class="btn" id="macro-bind" data-i18n="macros.bind">Asignar macro</button></div>
+            <p class="macro-note" data-i18n="macros.send_first"></p>
           </div>
         </div>
 
@@ -336,6 +415,7 @@
   <script src="js/keyboard_canvas.js"></script>
   <script src="js/cli_composer.js"></script>
   <script src="js/tab_remap.js"></script>
+  <script src="js/tab_macros.js"></script>
   <script src="js/tab_lighting.js"></script>
   <script src="js/tab_music.js"></script>
   <script src="js/battery.js"></script>

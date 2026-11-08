@@ -11,13 +11,14 @@
     "remap": "Remapeamento",
     "lighting": "Efeitos de Luz",
     "perkey": "RGB por Tecla",
-    "lcd": "Tela TFT & Relógio",
+    "lcd": "Imagens LCD (só USB)",
     "settings": "Configurações",
-    "music": "Música"
+    "music": "Música",
+    "macros": "Macros"
   },
   "home": {
     "welcome": "Bem-vindo ao Gerenciador AULA F108 Pro",
-    "desc": "Selecione uma categoria no menu à esquerda para personalizar a iluminação, teclas e tela TFT. Todas as ações geram comandos CLI em tempo real no console inferior.",
+    "desc": "Por 2.4G você pode usar remapeamento, macros, iluminação, música, RGB por tecla, bateria e sincronização do relógio. Imagens LCD exigem cabo USB e não são gerenciadas aqui.",
     "firmware": "Versão do Firmware",
     "connection": "Modo de Conexão",
     "wired_mode": "USB Cabeado (Relatórios de Recursos Completos)",
@@ -197,5 +198,19 @@
       "11": "Verde",
       "12": "Verde (variante)"
     }
+  },
+  "macros": {
+    "title": "Macros 2.4G",
+    "help": "Crie macros, envie a tabela completa e depois atribua a uma tecla. O envio substitui todas as macros do teclado. Pressione uma tecla para acordar o teclado se não houver confirmação.",
+    "list": "Macro", "name": "Nome (máximo 40 caracteres)", "add": "Adicionar macro", "up": "Subir", "down": "Descer", "delete": "Excluir",
+    "order_warning": "A posição na lista é o número da macro. Excluir ou mover macros pode mudar a ação das teclas atribuídas; revise as atribuições depois do envio.",
+    "events": "Eventos", "event_type": "Adicionar evento", "down_event": "Tecla pressionada", "up_event": "Tecla solta", "delay_event": "Pausa", "tap_event": "Toque", "text_event": "Texto",
+    "key": "Tecla", "ms": "Milissegundos (10–65535)", "text": "Texto (a–z, 0–9)", "add_event": "Adicionar evento", "record": "Gravar teclas", "stop_record": "Parar gravação",
+    "recording": "Gravando… pressione teclas nesta página; clique para parar", "size": "Tamanho da tabela", "bytes": "bytes", "event_count": "eventos", "too_large": "Limite excedido",
+    "send": "Enviar tabela completa", "sent": "Tabela de macros enviada", "assign_title": "Atribuir a uma tecla", "layer": "Camada", "normal": "Normal", "fn": "FN",
+    "mode": "Modo", "once": "Uma vez", "times": "N vezes", "toggle": "Alternar", "hold": "Enquanto pressionada", "count": "Repetições (1–255)", "bind": "Atribuir macro",
+    "send_first": "Envie a tabela antes de atribuir. Mudanças na lista exigem novo envio.", "default_name": "Macro", "unnamed": "Sem nome", "remove_event": "Remover evento",
+    "limit": "Máximo de 100 macros", "invalid_ms": "Pausa inválida (10–65535 ms)", "invalid_text": "Texto: só a–z e 0–9", "invalid_count": "Repetições: 1–255",
+    "last_warning": "Excluir todas as macros aguarda uma captura oficial da tabela vazia"
   }
 }
