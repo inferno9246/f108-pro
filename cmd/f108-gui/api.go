@@ -28,7 +28,7 @@ type remapPayload struct {
 	Transport string `json:"transport"` // por ahora solo "wireless"
 	Layer     string `json:"layer"`     // "normal" | "fn"
 	KeyIndex  uint8  `json:"key_index"`
-	Target    string `json:"target"` // "a", "media:play", "mouse:lclick", "combo:ctrl+c"
+	Target    string `json:"target"` // "a", "media:play", "mouse:lclick", "combo:ctrl+c", "macro:N"
 }
 
 var deviceMu sync.Mutex // un solo acceso al teclado a la vez
@@ -76,6 +76,12 @@ func handleInvoke(w http.ResponseWriter, r *http.Request) {
 		data, err = perkeyStateHandler()
 	case "perkey_apply":
 		data, err = perkeyApply(req.Payload)
+	case "macro_state":
+		data, err = macroState()
+	case "macro_send":
+		data, err = macroSend(req.Payload)
+	case "macro_clear":
+		data, err = macroClear()
 	case "get_device_status":
 		data = map[string]bool{
 			"usb_connected":    usbPresent("0c45", "800a"),
