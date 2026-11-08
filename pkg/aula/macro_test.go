@@ -130,4 +130,7 @@ func TestSendMacrosRejectsBeforeDeviceIO(t *testing.T) {
 	if err := d.SendMacros([][]MacroEvent{{}}); err == nil {
 		t.Fatal("la macro vacía debería fallar antes de abrir hidraw")
 	}
+	if err := d.SendMacros(nil); err == nil {
+		t.Fatal("el borrado total sin captura debería fallar antes de abrir hidraw")
+	}
 }

@@ -16,6 +16,7 @@ func TestParseMacroPayloadValidatesBeforeDevice(t *testing.T) {
 		{`{"macros":[{"name":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","events":["tap:a"]}]}`, "nombre"},
 		{`{"macros":[{"name":"x","events":["down:a"],"extra":1}]}`, "desconocido"},
 		{`{"macros":null}`, "macros"},
+		{`{"macros":[]}`, "captura"},
 	} {
 		_, _, err := parseMacroPayload(json.RawMessage(tc.raw))
 		if err == nil || !strings.Contains(err.Error(), tc.want) {
@@ -41,5 +42,11 @@ func TestMacroStateUsesConfigDir(t *testing.T) {
 	info, err := os.Stat(filepath.Clean(p))
 	if err != nil || info.Mode().Perm() != 0o600 {
 		t.Fatalf("permisos: %v, %v", info, err)
+	}
+}
+
+func TestMacroClearWaitsForCapture(t *testing.T) {
+	if _, err := macroClear(); err == nil || !strings.Contains(err.Error(), "captura") {
+		t.Fatalf("el borrado total sin captura debería fallar: %v", err)
 	}
 }

@@ -81,6 +81,9 @@ func parseMacroPayload(raw json.RawMessage) (macroData, [][]aula.MacroEvent, err
 	if st.Macros == nil {
 		return st, nil, fmt.Errorf("se requiere una lista de macros")
 	}
+	if len(st.Macros) == 0 {
+		return st, nil, fmt.Errorf("el borrado total de macros aún no tiene captura oficial")
+	}
 	macros := make([][]aula.MacroEvent, len(st.Macros))
 	for i, m := range st.Macros {
 		if utf8.RuneCountInString(m.Name) > 40 {
@@ -131,20 +134,5 @@ func macroSend(raw json.RawMessage) (any, error) {
 }
 
 func macroClear() (any, error) {
-	deviceMu.Lock()
-	defer deviceMu.Unlock()
-	wdev, err := aula.OpenWireless()
-	if err != nil {
-		return nil, err
-	}
-	defer wdev.Close()
-	if err := wdev.SendMacros(nil); err != nil {
-		return nil, err
-	}
-	macroMu.Lock()
-	defer macroMu.Unlock()
-	if err := macroSave(macroData{Macros: []macroDefinition{}}); err != nil {
-		return nil, err
-	}
-	return map[string]bool{"ok": true}, nil
+	return nil, fmt.Errorf("el borrado total de macros aún no tiene captura oficial")
 }

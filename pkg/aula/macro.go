@@ -95,7 +95,8 @@ func ParseMacroEvents(items []string) ([]MacroEvent, error) {
 	return events, nil
 }
 
-// BuildMacroTable construye la tabla completa. Una lista vacía borra todas las macros.
+// BuildMacroTable construye la tabla completa. La tabla vacía aún no está
+// validada contra una captura oficial y SendMacros impide enviarla.
 func BuildMacroTable(macros [][]MacroEvent) ([]byte, error) {
 	if len(macros) > 100 {
 		return nil, fmt.Errorf("máximo 100 macros")

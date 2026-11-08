@@ -308,6 +308,9 @@ func (d *WirelessDevice) SetPerKeyRGB(keys []KeyColor, brightness uint8) error {
 
 // SendMacros sustituye la tabla completa. Valida todos los eventos antes del primer envío.
 func (d *WirelessDevice) SendMacros(macros [][]MacroEvent) error {
+	if len(macros) == 0 {
+		return fmt.Errorf("el borrado total de macros aún no tiene captura oficial")
+	}
 	table, err := BuildMacroTable(macros)
 	if err != nil {
 		return err
