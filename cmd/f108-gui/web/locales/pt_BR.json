@@ -6,6 +6,9 @@
     "status_disconnected": "Desconectado - Conecte o teclado via cabo USB",
     "device_info": "AULA F108 Pro | Teclado Mecânico RGB Tri-Modo"
   },
+  "connection": {
+    "server_gone": "O servidor local parou de responder. Reinicie a interface e abra a nova URL exibida."
+  },
   "nav": {
     "home": "Início",
     "remap": "Remapeamento",

@@ -6,6 +6,9 @@
     "status_disconnected": "Disconnected - Please connect keyboard via USB cable",
     "device_info": "AULA F108 Pro | Three-Mode RGB Mechanical Keyboard"
   },
+  "connection": {
+    "server_gone": "The local server stopped responding. Restart the GUI and open the new URL it prints."
+  },
   "nav": {
     "home": "Home",
     "remap": "Key Remap",

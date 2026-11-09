@@ -6,6 +6,9 @@
     "status_disconnected": "Sin conexión: conecta el teclado por cable USB o el dongle 2.4G",
     "device_info": "AULA F108 Pro | Teclado mecánico RGB de tres modos"
   },
+  "connection": {
+    "server_gone": "El servidor local dejó de responder. Reinicia la GUI y abre la nueva URL que imprime."
+  },
   "nav": {
     "home": "Inicio",
     "remap": "Remapeo de teclas",

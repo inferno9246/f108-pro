@@ -18,11 +18,21 @@ class HostBridge {
         if (!this.token) {
             throw new Error('Falta el token: abre la URL completa que imprime el programa (con ?t=...).');
         }
-        const res = await fetch('/api/invoke', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-Token': this.token },
-            body: JSON.stringify({ action, payload }),
-        });
+        let res;
+        try {
+            res = await fetch('/api/invoke', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Token': this.token },
+                body: JSON.stringify({ action, payload }),
+            });
+        } catch (e) {
+            if (e instanceof TypeError) {
+                throw new Error(window.i18n?.t('connection.server_gone',
+                    'El servidor local dejó de responder. Reinicia la GUI y abre la nueva URL que imprime.') ||
+                    'El servidor local dejó de responder. Reinicia la GUI y abre la nueva URL que imprime.');
+            }
+            throw e;
+        }
         if (!res.ok) {
             throw new Error(`${res.status} ${res.statusText}`);
         }
