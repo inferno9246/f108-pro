@@ -352,6 +352,34 @@
         <!-- Tab 6: Settings -->
         <div class="tab-pane" id="pane-settings">
           <div class="card">
+            <h2 class="card-title" data-i18n="settings.keyboard_title">Ajustes del teclado 2.4G</h2>
+            <p data-i18n="settings.keyboard_help">El valor guardado procede de esta GUI; el teclado no permite leer los ajustes actuales.</p>
+            <div class="controls-grid">
+              <div class="form-group">
+                <label for="settings-sleep" data-i18n="settings.sleep">Tiempo de reposo</label>
+                <select id="settings-sleep">
+                  <option value="0" data-i18n="settings.sleep_0">Sin reposo</option>
+                  <option value="1" data-i18n="settings.sleep_1">1 minuto</option>
+                  <option value="2" data-i18n="settings.sleep_2">5 minutos</option>
+                  <option value="3" data-i18n="settings.sleep_3">30 minutos</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="settings-response" data-i18n="settings.response">Tiempo de respuesta 2.4G</label>
+                <select id="settings-response">
+                  <option value="1" data-i18n="settings.response_1">Nivel 1 · aprox. 5–6 ms</option>
+                  <option value="2" data-i18n="settings.response_2">Nivel 2 · aprox. 7–9 ms</option>
+                  <option value="3" data-i18n="settings.response_3">Nivel 3 · aprox. 10–12 ms</option>
+                  <option value="4" data-i18n="settings.response_4">Nivel 4 · aprox. 15–17 ms</option>
+                  <option value="5" data-i18n="settings.response_5">Nivel 5 · aprox. 19–21 ms</option>
+                </select>
+              </div>
+            </div>
+            <p data-i18n="settings.response_warning">Los niveles rápidos pueden causar rebotes de tecla.</p>
+            <p id="settings-state-note" role="status"></p>
+            <button class="btn" id="settings-apply" data-i18n="settings.apply">Aplicar al teclado</button>
+          </div>
+          <div class="card">
             <div class="card-title">⚙️ <span data-i18n="settings.title">Application Preferences</span></div>
             <div class="controls-grid">
               <div class="form-group">

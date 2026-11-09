@@ -60,7 +60,7 @@ class AppMain {
         this.tabLcd.init();
 
         this.tabSettings = new window.TabSettings(this);
-        this.tabSettings.init();
+        await this.tabSettings.init();
 
         this.tabMusic = new window.TabMusic(this);
         this.tabMusic.init();

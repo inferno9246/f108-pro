@@ -82,6 +82,10 @@ func handleInvoke(w http.ResponseWriter, r *http.Request) {
 		data, err = macroSend(req.Payload)
 	case "macro_clear":
 		data, err = macroClear()
+	case "settings_state":
+		data, err = settingsState()
+	case "settings_apply":
+		data, err = settingsApply(req.Payload)
 	case "get_device_status":
 		data = map[string]bool{
 			"usb_connected":    usbPresent("0c45", "800a"),

@@ -9,6 +9,10 @@ remap on the normal and FN layers, and per-key restore. Normal layer: `02 00
 
 Not verified: persistence after power cycle, behavior after switching to
 USB-C, and restoring all keys at once.
+
+Macro playback on Insert is verified on hardware: a captured W macro assigned
+to Insert produced `w` when the key was pressed.
+
 ## Source Functions
 
 | Function     | Address      | Purpose                                              |
@@ -62,3 +66,45 @@ once if it fails.
 Same 4-byte slots as the wired protocol, see
 [key-remap-protocol.md](key-remap-protocol.md). With no action assigned, the
 original driver sends `02 00 <HID usage>` (the key mapped to itself).
+
+## Wireless function settings (`07 10`)
+
+The 19-byte payload below is **deduced from 17 actual outgoing packets** in
+`todo.pcapng`. The repository's `settings-seventeen.bin` golden test compares
+all 17 full 33-byte packets, including checksum. The GUI sent the captured
+`sleep=2, response=1, flags=0` packet to hardware, then the captured response
+level 2 packet, and finally restored level 1; all three received ACKs. That
+confirms transport and acceptance, not the elapsed sleep time or measured key
+latency.
+
+| Payload offset | Meaning |
+| --- | --- |
+| 0-4 | `07 10 00 00 01` |
+| 5-7 | Three 0/1 options; mapping to UI labels remains unverified |
+| 8 | `00` |
+| 9 | Sleep level 0-3 |
+| 10 | `00` |
+| 11 | Key response level 1-5 |
+| 12-16 | Zero |
+| 17-18 | `AA 55` |
+
+The official language file lists No Sleep, 1 minute, 5 minutes, and 30 minutes;
+the level order shown in the GUI follows the capture sequence and is still a
+**deduction**, pending a timed hardware check. The response levels correspond
+approximately to 5-6, 7-9, 10-12, 15-17, and 19-21 ms in 2.4G; these values
+come from prior timing experiments and remain approximate. Lower levels may
+allow key chatter. The three unnamed options are always sent as zero by the
+GUI, matching the user's captured current values. The official language file
+contains Disable Windows Key, Disable ALT+F4 and Disable ALT+TAB, but the byte
+mapping is still a **hypothesis** and is not exposed.
+
+The GUI saves the last sent selection in `~/.config/f108-pro/gui-settings.json`.
+This file is local desired state: there is no verified readback of the current
+wireless settings.
+
+## Scope from the official layout
+
+The official `rgb-keyboard.xml` enables wireless macros, lighting, per-key
+lighting and music. It marks the wireless screen and side lighting unavailable.
+It also advertises FN layer, sleep time and key response time. No LCD image
+upload has been tested or implemented for wireless mode.
