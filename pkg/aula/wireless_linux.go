@@ -166,6 +166,16 @@ func (d *WirelessDevice) SetLighting(cfg LightingConfig) error {
 	})
 }
 
+// SetSettings configura reposo (0-3) y respuesta (1-5) en 2.4G. Las tres
+// casillas no identificadas se envían a cero, como en la configuración capturada.
+func (d *WirelessDevice) SetSettings(sleep, response byte) error {
+	payload, err := settingsPayload(sleep, response, [3]byte{})
+	if err != nil {
+		return err
+	}
+	return d.send(payload)
+}
+
 // SyncClock sincroniza el reloj de la pantalla por el dongle 2.4G.
 // Formato reconstruido de FUN_00423c40 (offsets del payload; el offset 0 del
 // paquete es el report ID): 0 = 0x0C, 1 = 0x10, 4 = perfil, 5 = 0x5A, 6 = año-2000,

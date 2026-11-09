@@ -6,3 +6,5 @@ Cada archivo concatena paquetes de 33 bytes (report ID, 31 bytes de payload y ch
 - `macro-three.bin`: `macros.pcapng`, desde offset decimal 56198; 22 trozos y cierre `09 08 16`. Tres macros con 19, 12 y 12 eventos; offsets de tabla 400, 484 y 540.
 
 Se tomó el primer paquete de cada índice de trozo (escritura al dongle). Cada captura también incluye una respuesta con la misma cabecera y datos a cero.
+
+- `settings-seventeen.bin`: `todo.pcapng`, 17 envíos `07 10` de 33 bytes en los offsets decimales 3330, 3634, 3938, 4242, 4850, 5154, 5458, 5762, 6066, 6370, 6978, 7282, 7586, 7890, 8194, 8498 y 8802. Incluye todos los niveles de respuesta 1-5, reposo 0-3 y las tres casillas activadas por separado. Se excluyeron sus ACK.
