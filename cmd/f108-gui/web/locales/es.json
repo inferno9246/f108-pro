@@ -25,7 +25,7 @@
     "quick_actions": "Acciones rápidas",
     "sync_clock_btn": "Sincronizar reloj",
     "lights_off_btn": "Apagar RGB",
-    "lights_default_btn": "Iluminación por defecto"
+    "lights_default_btn": "Efecto 1 del teclado"
   },
   "remap": {
     "title": "Remapeo de teclas",
@@ -81,7 +81,7 @@
       "Spectrum": "Ciclo de espectro",
       "Outward": "Onda hacia fuera",
       "Scrolling": "Desplazamiento horizontal",
-      "Rolling": "Rodado en diagonal",
+      "Rolling": "Onda hacia la derecha (efecto 1)",
       "Rotating": "Vórtice giratorio",
       "Explode": "Explosión",
       "Launch": "Rayo de lanzamiento",
@@ -142,7 +142,7 @@
     "response_3": "Nivel 3 · aprox. 10–12 ms",
     "response_4": "Nivel 4 · aprox. 15–17 ms",
     "response_5": "Nivel 5 · aprox. 19–21 ms",
-    "response_warning": "Un nivel más rápido puede causar rebotes de tecla.",
+    "response_warning": "Un nivel rápido puede causar rebotes. La distancia y las interferencias también afectan la conexión 2.4G; acerca el dongle al teclado y sepáralo de hubs metálicos y otros receptores si falla.",
     "apply": "Aplicar al teclado",
     "saved_local": "Último valor enviado desde esta GUI.",
     "unknown_state": "Sin ajuste guardado; se muestran valores iniciales sugeridos.",
@@ -155,7 +155,6 @@
     "theme_cyberpunk": "Neón cyberpunk",
     "theme_custom": "Fondo de imagen personalizado…",
     "language": "Idioma de la interfaz",
-    "cli_path": "Ruta del binario f108-pro (no se usa)",
     "auto_detect": "Detección automática",
     "about": "Acerca de AULA F108 Pro Linux Suite",
     "about_text": "Hecho para Linux, independiente de Wine y del software de Windows. El remapeo funciona por el dongle 2.4G."

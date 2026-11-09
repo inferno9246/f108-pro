@@ -59,7 +59,7 @@ func handleInvoke(w http.ResponseWriter, r *http.Request) {
 	case "light_off":
 		data, err = lightApply(aula.LightingConfig{Mode: aula.ModeOff})
 	case "light_default":
-		data, err = lightApply(aula.LightingConfig{Mode: aula.ModeBreath, R: 147, G: 51, B: 234, Brightness: 5, Speed: 3})
+		data, err = lightApply(aula.DefaultLightingConfig())
 	case "light_apply":
 		data, err = lightApplyPayload(req.Payload)
 	case "sync_clock":
@@ -91,8 +91,6 @@ func handleInvoke(w http.ResponseWriter, r *http.Request) {
 			"usb_connected":    usbPresent("0c45", "800a"),
 			"dongle_connected": usbPresent("05ac", "024f"),
 		}
-	case "get_app_info":
-		data = map[string]string{"cli_path": "(integrado)"}
 	default:
 		err = fmt.Errorf("unknown action %q", req.Action)
 	}

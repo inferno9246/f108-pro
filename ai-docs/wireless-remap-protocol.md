@@ -91,12 +91,21 @@ latency.
 The official language file lists No Sleep, 1 minute, 5 minutes, and 30 minutes;
 the level order shown in the GUI follows the capture sequence and is still a
 **deduction**, pending a timed hardware check. The response levels correspond
-approximately to 5-6, 7-9, 10-12, 15-17, and 19-21 ms in 2.4G; these values
-come from prior timing experiments and remain approximate. Lower levels may
-allow key chatter. The three unnamed options are always sent as zero by the
+approximately to 5-6, 7-9, 10-12, 15-17, and 19-21 ms in 2.4G according to
+the official `app/language/1033.lan` text; they have not been independently
+measured on hardware. Lower levels may allow key chatter. The three unnamed
+options are always sent as zero by the
 GUI, matching the user's captured current values. The official language file
 contains Disable Windows Key, Disable ALT+F4 and Disable ALT+TAB, but the byte
 mapping is still a **hypothesis** and is not exposed.
+
+The same official language file says the approximate times can vary with
+surrounding interference. It does not define a distance threshold or say that
+changing this level repairs a weak radio link. AULA's
+[F108 Pro FAQ](https://aulastar.com/faq/887.html) advises keeping the keyboard
+close to the receiver when pairing and using a USB 2.0 port away from other
+receivers and metal hubs if 2.4G is unstable. The GUI repeats that placement
+advice separately from the key chatter warning.
 
 The GUI saves the last sent selection in `~/.config/f108-pro/gui-settings.json`.
 This file is local desired state: there is no verified readback of the current
@@ -108,3 +117,13 @@ The official `rgb-keyboard.xml` enables wireless macros, lighting, per-key
 lighting and music. It marks the wireless screen and side lighting unavailable.
 It also advertises FN layer, sleep time and key response time. No LCD image
 upload has been tested or implemented for wireless mode.
+
+For lighting, the same XML declares `default_mode=11`, brightness 5 and speed
+3. `todo.pcapng` contains a matching `05 10` packet for mode 11, colorful=1,
+brightness=5 and speed=3; `light-screen-effect-one.bin` tests that exact packet.
+The [F108 Pro manual](https://ae-pic-a1.aliexpress-media.com/kf/Sb21d4c9727e64503b93275a68acd2859h.pdf)
+lists “Wave Follow” first in the screen's effects list. The mapping of the
+screen's “effect 1” to protocol mode 11 is **verified on hardware**: the
+captured packet received an ACK and the user visually confirmed that its
+left-to-right wave matches the effect selected on the keyboard screen. The
+mode number shown by the GUI is the protocol number.

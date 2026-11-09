@@ -8,3 +8,4 @@ Cada archivo concatena paquetes de 33 bytes (report ID, 31 bytes de payload y ch
 Se tomó el primer paquete de cada índice de trozo (escritura al dongle). Cada captura también incluye una respuesta con la misma cabecera y datos a cero.
 
 - `settings-seventeen.bin`: `todo.pcapng`, 17 envíos `07 10` de 33 bytes en los offsets decimales 3330, 3634, 3938, 4242, 4850, 5154, 5458, 5762, 6066, 6370, 6978, 7282, 7586, 7890, 8194, 8498 y 8802. Incluye todos los niveles de respuesta 1-5, reposo 0-3 y las tres casillas activadas por separado. Se excluyeron sus ACK.
+- `light-screen-effect-one.bin`: `todo.pcapng`, paquete `05 10` en offset decimal 9106; modo 11, multicolor, brillo 5 y velocidad 3. Coincide con `default_mode=11` del XML oficial; la equivalencia con «efecto 1» de la pantalla se deduce del orden del manual y aún requiere confirmación visual en hardware.

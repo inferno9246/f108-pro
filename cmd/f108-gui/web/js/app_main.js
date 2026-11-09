@@ -142,14 +142,23 @@ class AppMain {
 
     populateLightingModes() {
         const select = document.getElementById('lighting-mode-select');
+        const firstLoad = !select.value;
+        const selected = select.value || 'Rolling';
         select.innerHTML = '';
-        this.lightingModes.forEach(mode => {
+        this.lightingModes.forEach((mode, index) => {
             const opt = document.createElement('option');
             opt.value = mode;
-            opt.textContent = `${mode} - ${window.i18n.t(`lighting.modes.${mode}`, mode)}`;
+            opt.textContent = `${index} · ${window.i18n.t(`lighting.modes.${mode}`, mode)}`;
             select.appendChild(opt);
         });
-        select.value = 'Breath';
+        select.value = selected;
+        if (firstLoad) {
+            document.getElementById('lighting-color-picker').value = '#ff0000';
+            document.getElementById('lighting-color-hex').value = '#FF0000';
+            this.tabLighting.rainbowCheck.checked = true;
+        }
+        this.tabLighting.refreshExtras();
+        if (!firstLoad) return;
 
         select.addEventListener('change', () => this.tabLighting.updateCommand());
 
@@ -260,7 +269,7 @@ class AppMain {
         const lightsOff = () => run('Luz apagada', 'light_off');
         bind('btn-quick-lights-off', lightsOff);
         bind('btn-home-lights-off', lightsOff);
-        bind('btn-home-lights-default', () => run('Iluminación por defecto', 'light_default'));
+        bind('btn-home-lights-default', () => run('Efecto 1 del teclado', 'light_default'));
     }
 
     async connectHardware() {

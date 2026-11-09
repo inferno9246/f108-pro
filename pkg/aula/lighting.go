@@ -62,6 +62,14 @@ type LightingConfig struct {
 	Colorful   bool  // true = rainbow, false = single color.
 }
 
+// DefaultLightingConfig reproduce el modo 11, brillo 5 y velocidad 3 del XML
+// oficial, con los demás bytes del paquete 05 10 capturado en todo.pcapng.
+func DefaultLightingConfig() LightingConfig {
+	return LightingConfig{
+		Mode: ModeRolling, R: 255, Brightness: 5, Speed: 3, Colorful: true,
+	}
+}
+
 // SetLighting changes the keyboard backlight mode and parameters.
 // Sequence: begin -> lighting init -> data -> apply -> finalize.
 //

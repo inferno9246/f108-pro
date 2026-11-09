@@ -353,7 +353,7 @@
         <div class="tab-pane" id="pane-settings">
           <div class="card">
             <h2 class="card-title" data-i18n="settings.keyboard_title">Ajustes del teclado 2.4G</h2>
-            <p data-i18n="settings.keyboard_help">El valor guardado procede de esta GUI; el teclado no permite leer los ajustes actuales.</p>
+            <p class="settings-help" data-i18n="settings.keyboard_help">La GUI recuerda el último valor enviado; no puede leer los ajustes actuales del teclado.</p>
             <div class="controls-grid">
               <div class="form-group">
                 <label for="settings-sleep" data-i18n="settings.sleep">Tiempo de reposo</label>
@@ -375,8 +375,8 @@
                 </select>
               </div>
             </div>
-            <p data-i18n="settings.response_warning">Los niveles rápidos pueden causar rebotes de tecla.</p>
-            <p id="settings-state-note" role="status"></p>
+            <p class="settings-note" data-i18n="settings.response_warning">Un nivel rápido puede causar rebotes. La distancia y las interferencias también afectan la conexión 2.4G; acerca el dongle al teclado y sepáralo de hubs metálicos y otros receptores si falla.</p>
+            <p class="settings-note" id="settings-state-note" role="status"></p>
             <button class="btn" id="settings-apply" data-i18n="settings.apply">Aplicar al teclado</button>
           </div>
           <div class="card">
@@ -400,10 +400,6 @@
                 </select>
               </div>
 
-              <div class="form-group">
-                <label data-i18n="settings.cli_path">CLI Binary Path (f108-pro)</label>
-                <input type="text" id="input-cli-path" value="~/.local/bin/f108-pro">
-              </div>
             </div>
 
             <div style="margin-top: 18px; border-top: 1px solid var(--panel-border); padding-top: 14px;">

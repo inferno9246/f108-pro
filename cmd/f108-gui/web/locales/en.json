@@ -25,7 +25,7 @@
     "quick_actions": "Quick Actions",
     "sync_clock_btn": "Sync Clock Now",
     "lights_off_btn": "Turn Off RGB",
-    "lights_default_btn": "Default Lighting"
+    "lights_default_btn": "Keyboard effect 1"
   },
   "remap": {
     "title": "Physical Key Remapping",
@@ -81,7 +81,7 @@
       "Spectrum": "Color Spectrum Cycle",
       "Outward": "Outward Ripple",
       "Scrolling": "Horizontal Scrolling",
-      "Rolling": "Diagonal Rolling",
+      "Rolling": "Wave Follow (screen effect 1)",
       "Rotating": "Rotating Vortex",
       "Explode": "Explode Burst",
       "Launch": "Launch Beam",
@@ -142,7 +142,7 @@
     "response_3": "Level 3 · approx. 10–12 ms",
     "response_4": "Level 4 · approx. 15–17 ms",
     "response_5": "Level 5 · approx. 19–21 ms",
-    "response_warning": "Faster levels may cause key chatter.",
+    "response_warning": "A faster level may cause key chatter. Distance and interference also affect the 2.4G connection; move the receiver closer to the keyboard and away from metal hubs and other receivers if it is unstable.",
     "apply": "Apply to keyboard",
     "saved_local": "Last values sent from this GUI.",
     "unknown_state": "No saved settings; suggested initial values are shown.",
@@ -155,7 +155,6 @@
     "theme_cyberpunk": "Cyberpunk Neon",
     "theme_custom": "Custom Image Wallpaper...",
     "language": "Interface Language",
-    "cli_path": "f108-pro CLI Binary Path",
     "auto_detect": "Auto Detect",
     "about": "About AULA F108 Pro Linux Suite",
     "about_text": "Built for native Linux desktop systems. Completely independent from wine or Windows software. Direct USB HID interface."

@@ -25,7 +25,7 @@
     "quick_actions": "Ações Rápidas",
     "sync_clock_btn": "Sincronizar Relógio Agora",
     "lights_off_btn": "Desligar Iluminação",
-    "lights_default_btn": "Iluminação Padrão"
+    "lights_default_btn": "Efeito 1 do teclado"
   },
   "remap": {
     "title": "Remapeamento de Teclas Físicas",
@@ -81,7 +81,7 @@
       "Spectrum": "Ciclo de Cores (Spectrum)",
       "Outward": "Ondas para Fora (Outward)",
       "Scrolling": "Rolagem Horizontal (Scrolling)",
-      "Rolling": "Rolagem Diagonal (Rolling)",
+      "Rolling": "Onda para a direita (efeito 1)",
       "Rotating": "Vórtice Giratório (Rotating)",
       "Explode": "Explosão de Luz (Explode)",
       "Launch": "Feixe de Lançamento (Launch)",
@@ -142,7 +142,7 @@
     "response_3": "Nível 3 · aprox. 10–12 ms",
     "response_4": "Nível 4 · aprox. 15–17 ms",
     "response_5": "Nível 5 · aprox. 19–21 ms",
-    "response_warning": "Níveis mais rápidos podem causar teclas repetidas.",
+    "response_warning": "Um nível mais rápido pode causar repetição de teclas. Distância e interferência também afetam a conexão 2.4G; aproxime o receptor do teclado e afaste-o de hubs metálicos e outros receptores se houver instabilidade.",
     "apply": "Aplicar ao teclado",
     "saved_local": "Últimos valores enviados por esta interface.",
     "unknown_state": "Sem configuração salva; os valores iniciais sugeridos são mostrados.",
@@ -155,7 +155,6 @@
     "theme_cyberpunk": "Cyberpunk Neon",
     "theme_custom": "Imagem de Fundo Personalizada...",
     "language": "Idioma da Interface",
-    "cli_path": "Caminho do Binário f108-pro",
     "auto_detect": "Detectar Automaticamente",
     "about": "Sobre a Suíte AULA F108 Pro Linux",
     "about_text": "Desenvolvido nativamente para sistemas Linux. 100% independente do Wine ou drivers Windows. Acesso direto USB HID."
