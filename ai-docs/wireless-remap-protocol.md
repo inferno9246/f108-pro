@@ -45,7 +45,10 @@ vendor interface (`0xFF59`, 64-byte reports) is not used for these commands.
 The `/dev/hidrawN` number changes on reconnection; `OpenWireless` matches the
 dongle's HID ID and report descriptor prefix `06 60 FF` instead of fixing N.
 On Linux, `hid_apple fnmode=2` prevents the dongle's Apple keyboard identity
-from turning F1-F12 into media keys.
+from turning F1-F12 into media keys. On November 24, 2026, with `fnmode=2`
+confirmed in sysfs, one short F2 press on the dongle's keyboard input
+interface produced one `KEY_F2` down event and one up event, with no brightness
+event. Other F keys were not individually tested in this session.
 
 ## Packet (33 bytes written, byte 0 is the report ID 0)
 
