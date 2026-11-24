@@ -110,6 +110,37 @@ If you want to follow along and let (A)I reverse the binary.
 
 ## Usage
 
+### Local GUI over 2.4G (Linux)
+
+From the repository directory, start the local web GUI and keep the terminal
+running:
+
+```bash
+cd /path/to/f108-pro
+go run ./cmd/f108-gui
+```
+
+Open the complete URL printed by the command, including `?t=...`. A tab from a
+previous run cannot reach the new server. The GUI supports remapping, macros,
+lighting, music, per-key RGB, battery, clock sync, sleep time, and key response
+time through the `05ac:024f` dongle. Bluetooth configuration and LCD image
+upload are outside the GUI. The GUI stores the last values it sent under
+`~/.config/f108-pro/gui-*.json`; these files are not a readback of the keyboard.
+
+On Linux, grant access only to the dongle's vendor configuration interface
+(USB interface 3, usage page `0xFF60`). An example udev rule is:
+
+```udev
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="024f", ENV{AULA_DONGLE}="1"
+SUBSYSTEM=="hidraw", ENV{AULA_DONGLE}=="1", SUBSYSTEMS=="usb", ATTRS{bInterfaceNumber}=="03", TAG+="uaccess"
+```
+
+The dongle identifies itself as an Apple keyboard. If Linux turns F1-F12 into
+media keys, `options hid_apple fnmode=2` in `/etc/modprobe.d/hid_apple.conf`
+keeps them as function keys. See
+[wireless protocol notes](ai-docs/wireless-remap-protocol.md) and the
+[hardware rollback plan](ai-docs/hardware-test-rollback.md).
+
 ### Backlight Mode
 
 ```bash
@@ -201,12 +232,20 @@ f108-pro lcd image.bin
 keyboard. See [ai-docs/lcd-upload-investigation](ai-docs/lcd-upload-investigation.md)
 
 ### Key Remapping
+
+2.4G examples (Linux):
+
+```bash
 # Send over the 2.4G dongle (Linux only, experimental):
 f108-pro remap --wireless capslock lctrl
 f108-pro remap --wireless --fn insert a
 
 # Restore specific keys over 2.4G:
 f108-pro remap --wireless --reset insert
+```
+
+Wired USB examples:
+
 ```bash
 # Swap CapsLock and Left Ctrl:
 f108-pro remap capslock lctrl
@@ -237,6 +276,9 @@ Target types:
 * `mouse:<action>`: lclick, rclick, mclick, scrollup, scrolldn.
 * `combo:<mods+key>`: modifiers are ctrl, shift, alt, win, rctrl, rshift,
   ralt, rwin.
+* `macro:N` and `macro:N:times:K`, `macro:N:toggle`, `macro:N:hold`:
+  assign an already uploaded 2.4G macro (`N` starts at 0). The GUI manages the
+  macro table; changing its order changes the meaning of existing assignments.
 
 YAML format:
 
