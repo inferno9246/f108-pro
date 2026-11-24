@@ -113,8 +113,13 @@ The official language file lists No Sleep, 1 minute, 5 minutes, and 30 minutes;
 the level order shown in the GUI follows the capture sequence. On November 24,
 2026, the user applied `sleep=1, response=1` through the GUI and observed the
 keyboard enter sleep after approximately one minute. Thus level 1 = about one
-minute is **verified on hardware** for this keyboard; levels 0, 2 and 3 remain
-deduced from the captures and official labels. The response levels correspond
+minute is **verified on hardware** for this keyboard. In a later controlled
+test, `sleep=0, response=1` received an ACK and the keyboard remained awake for
+100 seconds without input; restoring `sleep=1, response=1` received an ACK and
+the user again observed sleep near one minute. Both exact 33-byte packets
+match `settings-seventeen.bin`. This verifies level 0 for the observed
+100-second interval, not indefinitely. Levels 2 and 3 remain deduced from the
+captures and official labels. The response levels correspond
 approximately to 5-6, 7-9, 10-12, 15-17, and 19-21 ms in 2.4G according to
 the official `app/language/1033.lan` text; they have not been independently
 measured on hardware. Lower levels may allow key chatter. The three unnamed

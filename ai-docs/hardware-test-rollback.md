@@ -39,6 +39,12 @@ nombre; sus valores anteriores no se conocen. El estado local posterior está
 respaldado en `~/.config/f108-pro/backups/20261124T190905Z/` y guarda solo
 lo enviado por la GUI, no el estado completo del hardware.
 
+También se probó `sleep=0, response=1` durante 100 segundos con un paquete
+idéntico al capturado: recibió ACK y el usuario no observó reposo. La prueba
+restauró automáticamente `sleep=1, response=1` con otro paquete capturado y
+ACK; el usuario comprobó que volvió a dormirse cerca de un minuto. No se
+modificó `gui-settings.json` durante la prueba; sigue guardando `1/1`.
+
 Para volver al estado histórico del 8 de noviembre desde la GUI: **Inicio → Efecto 1 del teclado**,
 **Ajustes → 5 minutos / nivel 1 → Aplicar**, y, solo si una prueba cambió
 macros/remapeos, **Macros → enviar W capturada → asignar macro 0 a Insert**.
