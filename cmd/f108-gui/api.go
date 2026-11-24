@@ -14,8 +14,9 @@ import (
 )
 
 type invokeReq struct {
-	Action  string          `json:"action"`
-	Payload json.RawMessage `json:"payload"`
+	Action    string          `json:"action"`
+	Payload   json.RawMessage `json:"payload"`
+	Transport string          `json:"transport"` // auto | wired | wireless
 }
 
 type invokeResp struct {
@@ -47,45 +48,70 @@ func handleInvoke(w http.ResponseWriter, r *http.Request) {
 	}
 	var data any
 	var err error
+	mode := ""
+	switch req.Action {
+	case "remap_apply", "remap_reset_key", "remap_reset_all", "light_off", "light_default",
+		"light_apply", "sync_clock", "music_start", "battery", "perkey_apply",
+		"macro_send", "settings_apply":
+		mode, err = resolveTransport(req.Transport)
+		if err != nil {
+			writeResp(w, nil, err)
+			return
+		}
+	}
 	switch req.Action {
 	case "remap_apply":
-		data, err = remapApply(req.Payload)
+		if err = wirelessOnly(mode); err == nil {
+			data, err = remapApply(req.Payload)
+		}
 	case "remap_reset_key":
-		data, err = remapResetKey(req.Payload)
+		if err = wirelessOnly(mode); err == nil {
+			data, err = remapResetKey(req.Payload)
+		}
 	case "remap_state":
 		data, err = remapState()
 	case "remap_reset_all":
-		data, err = remapResetAll()
+		if err = wirelessOnly(mode); err == nil {
+			data, err = remapResetAll()
+		}
 	case "light_off":
-		data, err = lightApply(aula.LightingConfig{Mode: aula.ModeOff})
+		data, err = lightApply(aula.LightingConfig{Mode: aula.ModeOff}, mode)
 	case "light_default":
-		data, err = lightApply(aula.DefaultLightingConfig())
+		data, err = lightApply(aula.DefaultLightingConfig(), mode)
 	case "light_apply":
-		data, err = lightApplyPayload(req.Payload)
+		data, err = lightApplyPayload(req.Payload, mode)
 	case "sync_clock":
-		data, err = clockSync()
+		data, err = clockSync(mode)
 	case "music_start":
-		data, err = musicStartPayload(req.Payload)
+		if err = wirelessOnly(mode); err == nil {
+			data, err = musicStartPayload(req.Payload)
+		}
 	case "music_stop":
 		data, err = musicStop()
 	case "music_status":
 		data, err = musicStatus()
 	case "battery":
-		data, err = batteryStatus()
+		if err = wirelessOnly(mode); err == nil {
+			data, err = batteryStatus()
+		}
 	case "perkey_state":
 		data, err = perkeyStateHandler()
 	case "perkey_apply":
-		data, err = perkeyApply(req.Payload)
+		data, err = perkeyApply(req.Payload, mode)
 	case "macro_state":
 		data, err = macroState()
 	case "macro_send":
-		data, err = macroSend(req.Payload)
+		if err = wirelessOnly(mode); err == nil {
+			data, err = macroSend(req.Payload)
+		}
 	case "macro_clear":
 		data, err = macroClear()
 	case "settings_state":
 		data, err = settingsState()
 	case "settings_apply":
-		data, err = settingsApply(req.Payload)
+		if err = wirelessOnly(mode); err == nil {
+			data, err = settingsApply(req.Payload)
+		}
 	case "get_device_status":
 		data = map[string]bool{
 			"usb_connected":    usbPresent("0c45", "800a"),

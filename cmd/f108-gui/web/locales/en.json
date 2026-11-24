@@ -7,7 +7,16 @@
     "device_info": "AULA F108 Pro | Three-Mode RGB Mechanical Keyboard"
   },
   "connection": {
-    "server_gone": "The local server stopped responding. Restart the GUI and open the new URL it prints."
+    "server_gone": "The local server stopped responding. Restart the GUI and open the new URL it prints.",
+    "choose": "Command transport",
+    "auto": "Automatic (USB-C first)",
+    "wired": "USB-C cable",
+    "wireless": "2.4G dongle",
+    "wired_detail": "USB-C detected: lighting, clock, and per-key RGB",
+    "wireless_detail": "Dongle detected: 2.4G features available",
+    "disconnected": "Disconnected",
+    "missing": "Selected transport not detected",
+    "scope": "Over USB-C: lighting, clock, and per-key RGB. Remapping, macros, settings, music, and battery still use 2.4G. LCD images are not managed here."
   },
   "nav": {
     "home": "Home",
@@ -21,7 +30,7 @@
   },
   "home": {
     "welcome": "Welcome to AULA F108 Pro Manager",
-    "desc": "Over 2.4G you can use remapping, macros, lighting, music, per-key RGB, battery status and clock sync. LCD images require USB cable and are not managed here.",
+    "desc": "Select USB-C for lighting, per-key RGB and clock sync. Select the 2.4G dongle for remapping, macros, settings, music and battery. LCD images are not managed here.",
     "firmware": "Firmware Version",
     "connection": "Connection Mode",
     "wired_mode": "USB Wired (Full Feature Reports)",

@@ -7,7 +7,16 @@
     "device_info": "AULA F108 Pro | Teclado Mecânico RGB Tri-Modo"
   },
   "connection": {
-    "server_gone": "O servidor local parou de responder. Reinicie a interface e abra a nova URL exibida."
+    "server_gone": "O servidor local parou de responder. Reinicie a interface e abra a nova URL exibida.",
+    "choose": "Transporte dos comandos",
+    "auto": "Automático (USB-C primeiro)",
+    "wired": "USB-C por cabo",
+    "wireless": "Dongle 2.4G",
+    "wired_detail": "USB-C detectado: iluminação, relógio e RGB por tecla",
+    "wireless_detail": "Dongle detectado: funções 2.4G disponíveis",
+    "disconnected": "Desconectado",
+    "missing": "Transporte selecionado não detectado",
+    "scope": "Por USB-C: iluminação, relógio e RGB por tecla. Remapeamento, macros, ajustes, música e bateria ainda usam 2.4G. Imagens LCD não são gerenciadas aqui."
   },
   "nav": {
     "home": "Início",
@@ -21,7 +30,7 @@
   },
   "home": {
     "welcome": "Bem-vindo ao Gerenciador AULA F108 Pro",
-    "desc": "Por 2.4G você pode usar remapeamento, macros, iluminação, música, RGB por tecla, bateria e sincronização do relógio. Imagens LCD exigem cabo USB e não são gerenciadas aqui.",
+    "desc": "Selecione USB-C para iluminação, RGB por tecla e relógio. Selecione o dongle 2.4G para remapeamento, macros, ajustes, música e bateria. Imagens LCD não são gerenciadas aqui.",
     "firmware": "Versão do Firmware",
     "connection": "Modo de Conexão",
     "wired_mode": "USB Cabeado (Relatórios de Recursos Completos)",

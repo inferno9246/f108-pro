@@ -28,7 +28,7 @@ func TestPerkeyApplyValidatesBeforeTouchingTheKeyboard(t *testing.T) {
 		`no es json`: "payload",
 	}
 	for body, want := range cases {
-		_, err := perkeyApply(json.RawMessage(body))
+		_, err := perkeyApply(json.RawMessage(body), "wireless")
 		if err == nil || !strings.Contains(err.Error(), want) {
 			t.Errorf("%s: esperaba un error con %q, obtuve %v", body, want, err)
 		}

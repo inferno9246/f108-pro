@@ -104,11 +104,14 @@
           <div class="controls-grid">
             <div class="card">
               <div class="card-title">🔌 <span data-i18n="home.connection">Connection Mode</span></div>
+              <label for="transport-select" data-i18n="connection.choose">Transporte para los comandos</label>
+              <select id="transport-select" class="quick-select">
+                <option value="auto" data-i18n="connection.auto">Automático (USB-C primero)</option>
+                <option value="wired" data-i18n="connection.wired">USB-C por cable</option>
+                <option value="wireless" data-i18n="connection.wireless">Dongle 2.4G</option>
+              </select>
               <div style="font-size: 13px; font-weight: 500;" id="home-conn-detail">Checking USB interfaces...</div>
-              <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
-                Interface 3: Feature Reports (Control)<br>
-                Interface 2: Interrupt Out/In (TFT LCD Stream)
-              </div>
+              <p class="settings-note" data-i18n="connection.scope">Por USB-C: iluminación, reloj y RGB por tecla. Remapeo, macros, ajustes, música y batería siguen por 2.4G. Las imágenes LCD no se gestionan aquí.</p>
             </div>
 
             <div class="card">

@@ -8,6 +8,7 @@
 class HostBridge {
     constructor() {
         this.token = new URLSearchParams(location.search).get('t');
+        this.transport = 'auto';
         this.eventListeners = new Map();
         if (!this.token) {
             console.error('Missing token: open the full URL printed by f108-gui (with ?t=...).');
@@ -23,7 +24,7 @@ class HostBridge {
             res = await fetch('/api/invoke', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-Token': this.token },
-                body: JSON.stringify({ action, payload }),
+                body: JSON.stringify({ action, payload, transport: this.transport }),
             });
         } catch (e) {
             if (e instanceof TypeError) {

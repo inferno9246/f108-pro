@@ -83,7 +83,7 @@ func perkeyStateHandler() (any, error) {
 	return perkeyLoad(), nil
 }
 
-func perkeyApply(raw json.RawMessage) (any, error) {
+func perkeyApply(raw json.RawMessage, transport string) (any, error) {
 	var p perkeyData
 	if err := json.Unmarshal(raw, &p); err != nil {
 		return nil, fmt.Errorf("invalid payload: %w", err)
@@ -107,13 +107,25 @@ func perkeyApply(raw json.RawMessage) (any, error) {
 	}
 
 	deviceMu.Lock()
-	wdev, err := aula.OpenWireless()
-	if err != nil {
-		deviceMu.Unlock()
-		return nil, err
+	var err error
+	switch transport {
+	case "wired":
+		var dev wiredController
+		dev, err = openWiredDevice()
+		if err == nil {
+			err = dev.SetPerKeyRGB(keys, uint8(p.Brightness))
+			dev.Close()
+		}
+	case "wireless":
+		var dev *aula.WirelessDevice
+		dev, err = aula.OpenWireless()
+		if err == nil {
+			err = dev.SetPerKeyRGB(keys, uint8(p.Brightness))
+			dev.Close()
+		}
+	default:
+		err = fmt.Errorf("transporte no soportado: %q", transport)
 	}
-	err = wdev.SetPerKeyRGB(keys, uint8(p.Brightness))
-	wdev.Close()
 	deviceMu.Unlock()
 	if err != nil {
 		return nil, err
@@ -121,7 +133,9 @@ func perkeyApply(raw json.RawMessage) (any, error) {
 
 	perkeyMu.Lock()
 	defer perkeyMu.Unlock()
-	_ = perkeySave(perkeyData{Brightness: p.Brightness, Keys: clean})
+	if err := perkeySave(perkeyData{Brightness: p.Brightness, Keys: clean}); err != nil {
+		return nil, fmt.Errorf("RGB enviado, pero no se pudo guardar el estado local: %w", err)
+	}
 	return map[string]any{"ok": true, "keys": len(keys)}, nil
 }
 

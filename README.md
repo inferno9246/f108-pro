@@ -110,7 +110,7 @@ If you want to follow along and let (A)I reverse the binary.
 
 ## Usage
 
-### Local GUI over 2.4G (Linux)
+### Local GUI over USB-C and 2.4G (Linux)
 
 From the repository directory, start the local web GUI and keep the terminal
 running:
@@ -121,10 +121,15 @@ go run ./cmd/f108-gui
 ```
 
 Open the complete URL printed by the command, including `?t=...`. A tab from a
-previous run cannot reach the new server. The GUI supports remapping, macros,
-lighting, music, per-key RGB, battery, clock sync, sleep time, and key response
-time through the `05ac:024f` dongle. Bluetooth configuration and LCD image
-upload are outside the GUI. The GUI stores the last values it sent under
+previous run cannot reach the new server. In Inicio, choose USB-C, 2.4G or
+automatic transport. Automatic mode selects USB-C when both devices are present.
+USB-C currently routes lighting, per-key RGB and clock sync through the wired
+device `0c45:800a` (select FN+4 on the keyboard). Remapping, macros, music,
+battery, sleep time and key response time use the `05ac:024f` dongle; select
+2.4G for these actions. Wired remapping is deliberately unavailable in the GUI:
+its protocol replaces the entire layer table and the GUI cannot read existing
+assignments from the keyboard. Bluetooth configuration and LCD image upload
+are outside the GUI. The GUI stores the last values it sent under
 `~/.config/f108-pro/gui-*.json`; these files are not a readback of the keyboard.
 
 On Linux, grant access only to the dongle's vendor configuration interface

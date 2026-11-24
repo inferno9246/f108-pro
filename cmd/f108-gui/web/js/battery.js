@@ -21,7 +21,8 @@
         if (!el || !window.hostBridge) return;
         try {
             const st = await window.hostBridge.invoke('get_device_status');
-            if (!st || !st.dongle_connected) {
+            const transport = window.hostBridge.transport;
+            if (!st || !st.dongle_connected || transport === 'wired' || (transport === 'auto' && st.usb_connected)) {
                 el.textContent = '';
                 return;
             }

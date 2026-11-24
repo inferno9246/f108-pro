@@ -19,7 +19,7 @@ type lightPayload struct {
 	Colorful   bool  `json:"colorful"`
 }
 
-func lightApplyPayload(raw json.RawMessage) (any, error) {
+func lightApplyPayload(raw json.RawMessage, transport string) (any, error) {
 	var p lightPayload
 	if err := json.Unmarshal(raw, &p); err != nil {
 		return nil, fmt.Errorf("invalid payload: %w", err)
@@ -27,12 +27,29 @@ func lightApplyPayload(raw json.RawMessage) (any, error) {
 	return lightApply(aula.LightingConfig{
 		Mode: aula.LightingMode(p.Mode), R: p.R, G: p.G, B: p.B,
 		Brightness: p.Brightness, Speed: p.Speed, Direction: p.Direction, Colorful: p.Colorful,
-	})
+	}, transport)
 }
 
-func lightApply(cfg aula.LightingConfig) (any, error) {
+func lightApply(cfg aula.LightingConfig, transport string) (any, error) {
+	if cfg.Mode < 0 || cfg.Mode > 19 || cfg.Brightness > 5 || cfg.Speed > 5 || cfg.Direction > 1 {
+		return nil, fmt.Errorf("iluminación fuera de rango")
+	}
 	deviceMu.Lock()
 	defer deviceMu.Unlock()
+	if transport == "wired" {
+		dev, err := openWiredDevice()
+		if err != nil {
+			return nil, err
+		}
+		defer dev.Close()
+		if err := dev.SetLighting(cfg); err != nil {
+			return nil, err
+		}
+		return map[string]bool{"ok": true, "confirmed": true}, nil
+	}
+	if transport != "wireless" {
+		return nil, fmt.Errorf("transporte no soportado: %q", transport)
+	}
 	wdev, err := aula.OpenWireless()
 	if err != nil {
 		return nil, err

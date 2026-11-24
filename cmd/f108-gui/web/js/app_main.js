@@ -34,6 +34,7 @@ class AppMain {
 
         // 1. Initialize i18n
         await window.i18n.init();
+        this.setupTransport();
 
         // 2. Initialize CLI Composer
         this.composer = new window.CliComposer();
@@ -76,7 +77,7 @@ class AppMain {
         // 6. Setup Navigation & Preferences
         this.setupNavigation();
 
-        // La carga de imágenes LCD queda fuera de esta interfaz 2.4G.
+        // La carga de imágenes LCD queda fuera de esta interfaz.
         ['lcd'].forEach(id => {
             const b = document.querySelector('.nav-item[data-tab="' + id + '"]');
             if (b) { b.classList.add('disabled'); b.title = 'Próximamente'; b.style.opacity = '0.4'; b.style.pointerEvents = 'none'; }
@@ -231,10 +232,24 @@ class AppMain {
             langSelectSettings.value = loc;
             await window.i18n.setLocale(loc);
             this.populateLightingModes();
+            this.connectHardware();
         };
 
         langSelectTop.addEventListener('change', onLangChange);
         langSelectSettings.addEventListener('change', onLangChange);
+    }
+
+    setupTransport() {
+        const select = document.getElementById('transport-select');
+        const saved = localStorage.getItem('f108_transport');
+        select.value = ['auto', 'wired', 'wireless'].includes(saved) ? saved : 'auto';
+        window.hostBridge.transport = select.value;
+        select.addEventListener('change', () => {
+            window.hostBridge.transport = select.value;
+            localStorage.setItem('f108_transport', select.value);
+            this.connectHardware();
+            if (window.f108BatteryPoll) window.f108BatteryPoll();
+        });
     }
 
     setupActionListeners() {
@@ -276,27 +291,30 @@ class AppMain {
         const dot = document.getElementById('status-dot');
         const text = document.getElementById('status-text');
         const detail = document.getElementById('home-conn-detail');
+        const t = (key, fallback) => window.i18n.t(`connection.${key}`, fallback);
 
         const updateStatus = (status) => {
-            if (status.cable_connected) {
+            const choice = window.hostBridge.transport;
+            const active = choice === 'auto'
+                ? (status.usb_connected ? 'wired' : status.dongle_connected ? 'wireless' : '')
+                : choice;
+            if (active === 'wired' && status.usb_connected) {
                 dot.className = 'status-dot connected';
-                text.textContent = 'USB por cable (acceso completo)';
-                detail.textContent = 'Conectado por cable USB (0c45:800a)';
+                text.textContent = t('wired', 'USB-C por cable');
+                detail.textContent = t('wired_detail', 'USB-C detectado: iluminación, reloj y RGB por tecla');
                 detail.style.color = 'var(--success)';
-            } else if (status.dongle_connected) {
+            } else if (active === 'wireless' && status.dongle_connected) {
                 dot.className = 'status-dot';
-                text.textContent = '2.4G inalámbrico';
-                detail.textContent = 'Dongle 2.4G (05ac:024f): remapeo, macros, iluminación, música, RGB por tecla, batería y reloj';
+                text.textContent = t('wireless', 'Dongle 2.4G');
+                detail.textContent = t('wireless_detail', 'Dongle detectado: funciones 2.4G disponibles');
                 detail.style.color = 'var(--warning)';
             } else {
                 dot.className = 'status-dot disconnected';
-                text.textContent = 'Desconectado';
-                detail.textContent = 'No se detecta ningún teclado ni dongle por USB';
+                text.textContent = t('disconnected', 'Desconectado');
+                detail.textContent = t('missing', 'No se detecta el transporte seleccionado');
                 detail.style.color = 'var(--error)';
             }
         };
-
-        window.hostBridge.on('usb_status_changed', (status) => updateStatus(status));
 
         try {
             const status = await window.hostBridge.invoke('get_device_status');
