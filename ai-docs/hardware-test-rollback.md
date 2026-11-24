@@ -24,14 +24,22 @@ presentes. La GUI seguía mostrando reposo de 5 minutos y respuesta nivel 1,
 pero son valores guardados localmente, no lecturas del teclado. Los JSON se
 respaldaron en `~/.config/f108-pro/backups/20261124T185111Z/`; este respaldo
 no contiene una lectura completa del teclado. Las tres casillas sin nombre
-podrían haber cambiado desde noviembre, así que no se enviará `07 10` hasta
-conocer sus valores actuales.
+podrían haber cambiado desde noviembre; sus valores anteriores al siguiente
+envío de `07 10` no se conocían.
 
 En la misma sesión, el usuario pasó a USB-C con FN+4 y comprobó que Insert
 seguía escribiendo `w`; al volver a 2.4G con FN+~, también escribió `w`.
 No se enviaron paquetes durante esos cambios de transporte.
 
-Para volver a este estado desde la GUI: **Inicio → Efecto 1 del teclado**,
+Después, el usuario aplicó desde la GUI reposo nivel 1 y respuesta nivel 1.
+Observó que el teclado entró en reposo cerca de un minuto: esto verifica el
+significado del nivel de reposo 1 en este teclado. La latencia del nivel de
+respuesta 1 no se midió. El envío también fijó en cero las tres casillas sin
+nombre; sus valores anteriores no se conocen. El estado local posterior está
+respaldado en `~/.config/f108-pro/backups/20261124T190905Z/` y guarda solo
+lo enviado por la GUI, no el estado completo del hardware.
+
+Para volver al estado histórico del 8 de noviembre desde la GUI: **Inicio → Efecto 1 del teclado**,
 **Ajustes → 5 minutos / nivel 1 → Aplicar**, y, solo si una prueba cambió
 macros/remapeos, **Macros → enviar W capturada → asignar macro 0 a Insert**.
 Cada paso vuelve a enviar paquetes capturados; verificar el resultado en el

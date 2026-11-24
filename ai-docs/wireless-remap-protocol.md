@@ -110,13 +110,17 @@ latency.
 | 17-18 | `AA 55` |
 
 The official language file lists No Sleep, 1 minute, 5 minutes, and 30 minutes;
-the level order shown in the GUI follows the capture sequence and is still a
-**deduction**, pending a timed hardware check. The response levels correspond
+the level order shown in the GUI follows the capture sequence. On November 24,
+2026, the user applied `sleep=1, response=1` through the GUI and observed the
+keyboard enter sleep after approximately one minute. Thus level 1 = about one
+minute is **verified on hardware** for this keyboard; levels 0, 2 and 3 remain
+deduced from the captures and official labels. The response levels correspond
 approximately to 5-6, 7-9, 10-12, 15-17, and 19-21 ms in 2.4G according to
 the official `app/language/1033.lan` text; they have not been independently
 measured on hardware. Lower levels may allow key chatter. The three unnamed
-options are always sent as zero by the
-GUI, matching the user's captured current values. The official language file
+options are always sent as zero by the GUI. Their state immediately before the
+November 24 change was unknown, so the prior values cannot be reconstructed
+from the local JSON. The official language file
 contains Disable Windows Key, Disable ALT+F4 and Disable ALT+TAB, but the byte
 mapping is still a **hypothesis** and is not exposed.
 
