@@ -72,6 +72,9 @@
     "green": "G",
     "blue": "B",
     "apply": "Aplicar Modo de Iluminação",
+    "preset_warm": "Luz fixa quente",
+    "preset_wave": "Onda 1 suave",
+    "preset_note": "Estes botões apenas preparam os controles. “Aplicar iluminação” altera o teclado; “Efeito 1 do teclado” em Início restaura a configuração confirmada.",
     "modes": {
       "Off": "Desligado",
       "Static": "Estático (Sempre Ligado)",

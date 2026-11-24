@@ -72,6 +72,9 @@
     "green": "G",
     "blue": "B",
     "apply": "Apply Lighting Mode",
+    "preset_warm": "Warm steady light",
+    "preset_wave": "Dim effect 1 wave",
+    "preset_note": "These buttons only prepare the controls. “Apply Lighting” changes the keyboard; “Keyboard effect 1” on Home restores the confirmed setting.",
     "modes": {
       "Off": "Off (Turned Off)",
       "Static": "Static (Always On)",

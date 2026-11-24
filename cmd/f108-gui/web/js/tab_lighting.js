@@ -24,6 +24,27 @@ class TabLighting {
         this.rainbowCheck.addEventListener('change', () => this.updateCommand());
         this.dirSelect.addEventListener('change', () => this.updateCommand());
         this.applyBtn.addEventListener('click', () => this.apply());
+        document.getElementById('lighting-preset-warm').addEventListener('click', () => this.previewPreset('warm'));
+        document.getElementById('lighting-preset-wave').addEventListener('click', () => this.previewPreset('wave'));
+        this.refreshExtras();
+    }
+
+    previewPreset(name) {
+        const presets = {
+            warm: {mode: 'Static', color: '#ff9b5c', brightness: 2, speed: 1, colorful: false},
+            wave: {mode: 'Rolling', color: '#ff0000', brightness: 2, speed: 1, colorful: true},
+        };
+        const p = presets[name];
+        if (!p) return;
+        this.modeSelect.value = p.mode;
+        this.colorPicker.value = p.color;
+        document.getElementById('lighting-color-hex').value = p.color.toUpperCase();
+        this.sliderBrightness.value = String(p.brightness);
+        document.getElementById('val-brightness').textContent = String(p.brightness);
+        this.sliderSpeed.value = String(p.speed);
+        document.getElementById('val-speed').textContent = String(p.speed);
+        this.rainbowCheck.checked = p.colorful;
+        this.dirSelect.value = '0';
         this.refreshExtras();
     }
 
