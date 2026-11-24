@@ -9,9 +9,10 @@ remap on the normal and FN layers, and per-key restore. Normal layer: `02 00
 
 On November 24, 2026, the user power-cycled this keyboard in 2.4G mode and
 confirmed that Insert still produced `w` through the stored macro. The screen
-still showed effect 1, five-minute sleep and response level 1. This verifies
-one power cycle for that macro assignment and those visible settings; other
-remaps and repeated cycles remain untested. The user then switched to USB-C
+still showed effect 1. The GUI still displayed five-minute sleep and response
+level 1 from its local saved state, which is not a readback of the keyboard.
+This verifies one power cycle for that macro assignment and visible effect;
+other remaps and repeated cycles remain untested. The user then switched to USB-C
 with FN+4: Insert still produced `w`. After switching back to 2.4G with FN+~,
 Insert again produced `w`. This verifies this one macro assignment across
 those transport changes on this keyboard.

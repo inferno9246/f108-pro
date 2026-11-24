@@ -18,9 +18,10 @@ respuesta nivel 1, macro W en la ranura 0 e Insert asignada a `macro:0`. El
 efecto fue confirmado visualmente y los envíos de efecto y ajustes recibieron
 ACK. El estado de otras teclas no se ha leído.
 
-El 24 de noviembre de 2026, el usuario volvió a confirmar efecto 1, reposo de
-5 minutos, respuesta nivel 1 e Insert escribiendo `w`. Tras apagar y encender
-en 2.4G, esos cuatro resultados seguían presentes. Los JSON locales se
+El 24 de noviembre de 2026, el usuario volvió a confirmar efecto 1 e Insert
+escribiendo `w`. Tras apagar y encender en 2.4G, ambos resultados seguían
+presentes. La GUI seguía mostrando reposo de 5 minutos y respuesta nivel 1,
+pero son valores guardados localmente, no lecturas del teclado. Los JSON se
 respaldaron en `~/.config/f108-pro/backups/20261124T185111Z/`; este respaldo
 no contiene una lectura completa del teclado. Las tres casillas sin nombre
 podrían haber cambiado desde noviembre, así que no se enviará `07 10` hasta
