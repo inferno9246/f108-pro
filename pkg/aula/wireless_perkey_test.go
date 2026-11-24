@@ -3,6 +3,8 @@
 package aula
 
 import (
+	"bytes"
+	"io"
 	"os"
 	"strings"
 	"syscall"
@@ -80,6 +82,17 @@ func TestPerKeyRejectsBadInput(t *testing.T) {
 }
 
 func TestBattery(t *testing.T) {
+	query, err := os.ReadFile("testdata/battery-query.bin")
+	if err != nil {
+		t.Fatal(err)
+	}
+	response, err := os.ReadFile("testdata/battery-response.bin")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(query) != 33 || len(response) != 33 {
+		t.Fatal("paquetes golden de batería deben medir 33 bytes")
+	}
 	fds, err := syscall.Socketpair(syscall.AF_UNIX, syscall.SOCK_STREAM|syscall.SOCK_NONBLOCK, 0)
 	if err != nil {
 		t.Skip("socketpair no disponible:", err)
@@ -87,21 +100,37 @@ func TestBattery(t *testing.T) {
 	a, b := os.NewFile(uintptr(fds[0]), "a"), os.NewFile(uintptr(fds[1]), "b")
 	defer a.Close()
 	defer b.Close()
+	packet := make(chan [33]byte, 1)
 	go func() {
-		pkt := make([]byte, 33)
-		if _, err := b.Read(pkt); err != nil {
-			// la lectura puede devolver parcial/espera: reintento simple
-			for i := 0; i < 50 && err != nil; i++ {
-				_, err = b.Read(pkt)
-			}
+		var pkt [33]byte
+		if _, err := io.ReadFull(b, pkt[:]); err != nil {
+			return
 		}
-		resp := make([]byte, 32)
-		copy(resp, []byte{0x20, 0x01, 0x00, 90})
-		b.Write(resp)
+		packet <- pkt
+		_, _ = b.Write(response[1:]) // hidraw entrega 32 bytes sin report ID
 	}()
 	d := &WirelessDevice{f: a}
 	got, err := d.Battery()
-	if err != nil || got != 90 {
-		t.Fatalf("Battery() = %d, %v; esperaba 90", got, err)
+	if err != nil || got != 91 {
+		t.Fatalf("Battery() = %d, %v; esperaba 91 de la captura", got, err)
 	}
+	if pkt := <-packet; !bytes.Equal(pkt[:], query) {
+		t.Fatalf("consulta distinta de la captura\n got % x\nwant % x", pkt, query)
+	}
+}
+
+func TestHW_WirelessBattery(t *testing.T) {
+	if os.Getenv("AULA_TEST_BATTERY") != "1" {
+		t.Skip("requiere AULA_TEST_BATTERY=1; consulta batería sin cambiar ajustes")
+	}
+	dev, err := OpenWireless()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer dev.Close()
+	level, err := dev.Battery()
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("batería del teclado: %d%%", level)
 }
