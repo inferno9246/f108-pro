@@ -33,6 +33,7 @@ over USB HID.
 * [key-map.md](key-map.md) - Keyboard layout, key codes, and key index mapping
 * [key-remap-protocol.md](key-remap-protocol.md) - Key remapping protocol for normal and FN layers
 * [macro-protocol.md](macro-protocol.md) - Macro recording, storage, and HID transfer protocol
+* [wireless-remap-protocol.md](wireless-remap-protocol.md) - 2.4G transport, commands, captured packet tests, and hardware verification status
 * [ghidra-functions.md](ghidra-functions.md) - Index of analyzed Ghidra functions with addresses and descriptions
 * [firmware-update.md](firmware-update.md) - Firmware update protocol (Sonix ISP flasher)
 * [lcd-upload-investigation.md](lcd-upload-investigation.md) - LCD upload investigation and corruption incident

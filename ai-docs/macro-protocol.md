@@ -168,21 +168,26 @@ bytes.
 `(macro_count + total_event_count) * 8 <= 3600 (0xE10)`
 
 #### Protocol Sequence
-The 2.4G variant does not use `04 19`/`04 15`. Instead, data is split into
-28-byte (0x1C) chunks and sent via the 2.4G command interface (FUN_0044f4e0):
+The 2.4G variant does not use `04 19`/`04 15`. The captured `todo.pcapng`
+and `macros.pcapng` transfers split the table into 28-byte (0x1C) chunks and
+send it via the 2.4G command interface (FUN_0044f4e0):
 
 ```
 For each chunk:
   Byte 0: 0x00
   Byte 1: 0x09 (subcommand)
-  Byte 2: chunk size (0x1C, or remaining bytes for the last chunk)
+  Byte 2: 0x1C (also in the last chunk)
   Byte 3: chunk index (0-based)
   Bytes 4-31: 28 bytes of macro data
-  Bytes 32-64: 0x00 (padding)
+  Byte 32: checksum (sum of bytes 0-31 modulo 256)
 ```
 
-2ms sleep between chunks. The `0x55 0xAA` trailer is appended to the data before
-chunking.
+The last chunk is zero padded. A separate 33-byte closing packet follows:
+`00 09 <useful bytes in last chunk> <chunk count> 00 ... 00 AA 55 <checksum>`;
+`AA 55` occupies payload offsets 29-30. The two golden transfers close with
+`09 04 10` and `09 08 16`. The application waits 10 ms between packets.
+These packet details are verified against both captured transfers, including
+their checksums. A transfer with no macros has not been captured or sent.
 
 ## Data Buffer Format
 Both USB and 2.4G use the same binary buffer layout (max 3584 bytes / 0xE00).
@@ -197,7 +202,7 @@ For each macro index i (0-based):
   Byte i*4+2: 0x00
   Byte i*4+3: 0x00
 
-Empty slot: 0xFF 0xFF 0xFF 0xFF (no recorded events)
+Empty slot: 0x00 0x00 0x00 0x00 (in the captured 2.4G tables)
 ```
 
 The `data_offset` is the byte offset from the buffer start to the macro's data
@@ -287,15 +292,15 @@ Two macros: macro 0 has 2 events (A down, A up), macro 1 is empty.
 ```
 Header:
   00: 90 01 00 00    Macro 0: data at offset 0x0190 (400)
-  04: FF FF FF FF    Macro 1: no data
+  04: 00 00 00 00    Macro 1: no data
 
 Data (at offset 400):
   190: 02 00 00 00 00 00 00 00    event_count = 2, padding
   198: 00 00 04 B0                event 0: key down, HID 0x04 (A)
   19C: 00 00 04 30                event 1: key up, HID 0x04 (A)
 
-Trailer (at end of padded buffer):
-  ...: 55 AA
+Wireless closing packet (separate from the table):
+  00 09 <useful bytes in last chunk> <chunk count> ... AA 55 <checksum>
 ```
 
 ## Key Binding

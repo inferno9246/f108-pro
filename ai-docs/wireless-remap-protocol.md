@@ -27,11 +27,15 @@ to Insert produced `w` when the key was pressed.
 
 ## Transport
 
-The dongle (`05AC:024F`) exposes five HID interfaces. Remap uses the vendor
+The dongle (`05AC:024F`) exposes five HID interfaces. Configuration uses the vendor
 interface with usage page `0xFF60`: 32-byte input and output reports, no
 report ID. Packets are sent as plain output reports (`write()` on
 `/dev/hidrawN` on Linux), not feature reports like the wired protocol. A second
-vendor interface (`0xFF59`, 64-byte reports) is not used for remap.
+vendor interface (`0xFF59`, 64-byte reports) is not used for these commands.
+The `/dev/hidrawN` number changes on reconnection; `OpenWireless` matches the
+dongle's HID ID and report descriptor prefix `06 60 FF` instead of fixing N.
+On Linux, `hid_apple fnmode=2` prevents the dongle's Apple keyboard identity
+from turning F1-F12 into media keys.
 
 ## Packet (33 bytes written, byte 0 is the report ID 0)
 
@@ -60,6 +64,10 @@ The keyboard answers with a 32-byte input report. Its first three bytes echo
 bytes 1-3 of the request; the last byte is the sum of the payload. The original
 driver waits 5 ms, then reads up to 20 times, 10 ms apart, and retries the write
 once if it fails.
+
+An ACK confirms receipt, not the visible effect. The keyboard may sleep and
+answer only after a key press. A timeout is therefore not proof that a command
+was not applied.
 
 ## Slot format
 
@@ -127,3 +135,61 @@ screen's “effect 1” to protocol mode 11 is **verified on hardware**: the
 captured packet received an ACK and the user visually confirmed that its
 left-to-right wave matches the effect selected on the keyboard screen. The
 mode number shown by the GUI is the protocol number.
+
+## Other 2.4G commands and evidence
+
+All offsets in this section refer to the 31-byte payload after the leading
+report ID. The 33-byte envelope and ACK are described above. The original
+`.pcapng` files stay outside this public repository; only the small packet
+fixtures and tests are committed.
+
+| Function | Payload | Evidence and limits |
+| --- | --- | --- |
+| Global lighting | `05 10 00 <mode> R G B 00 00 00 00 <colorful> <brightness> <speed> <direction> 00 00 AA 55` | Mode 11's full packet has a golden from `todo.pcapng` and its visible effect was confirmed on hardware. Modes 0-19, brightness/speed 0-5 and direction 0-1 are implemented; the other combinations do not each have a captured golden. |
+| Clock | `0C 10 00 00 01 5A <year-2000> <month> <day> <hour> <minute> <second> 00 <weekday> 00 00 00 AA 55` | Reconstructed from `FUN_00423c40`, matched byte for byte with a `todo.pcapng` packet in `TestWirelessClockMatchesOfficialCapture`, and exercised on hardware. This sets time only; it does not upload LCD images. |
+| Music | `0B 1C 00 <foreground 1-7> <background 0-12> <background brightness 0-100> <21 levels 0-5> 00 00 00 00` | One complete packet is compared byte for byte with `aulaf108.pcapng` in `TestSendMusicFrameMatchesCapture`; output was verified on hardware. Frames are streamed around 30/s and do not persist after they stop. |
+| Battery | Query `20 01 00`; response byte 3 is percentage | Compared with the official program and exercised on hardware. `TestBattery` uses a simulated response; it is not a captured-packet golden. |
+| Device info | Query `02 00` | Response is observed, but its field meanings are unknown; the GUI does not interpret it. |
+
+### Per-key RGB (`14 1C`)
+
+First send `05 10` with mode `0x80` and brightness 0-5. Then send 20 packets
+`14 1C <chunk index> <28 data bytes>`, for 560 data bytes total. Each four-byte
+slot at offset `light_index * 4` is `[light_index, R, G, B]`. Finish with
+`14 10 14` and `AA 55` at payload offsets 17-18. The 22-packet sequence is
+compared byte for byte with output checked against `todo.pcapng` in
+`TestPerKeyPacketsMatchOfficialCapture`, and the lights were verified on
+hardware. Sending a new table replaces the per-key colors; omitted keys are
+dark. The GUI stores its desired colors locally because no readback is verified.
+
+### Macros (`09 1C`)
+
+Every send replaces the full macro table. The first 400 bytes hold 100 little
+endian 32-bit offsets; unused slots are `00 00 00 00`. Each present macro has
+an eight-byte header (`<event count LE16>` and six zero bytes), followed by
+four-byte events. Captured keyboard events are `00 00 <HID> B0` for down and
+`00 00 <HID> 30` for up; a delay is `<milliseconds LE16> 00 50`, with at least
+10 ms used by the official software. Mouse flags `90`/`10` are inferred from
+the executable but have not been hardware verified.
+
+Send the table in 28-byte chunks `09 1C <index> <data>`, including a zero-padded
+last chunk. Finish with `09 <useful bytes in final chunk> <chunk count>`, with
+`AA 55` at payload offsets 29-30. Limits implemented: table at most 3584 bytes
+and `(macro count + event count) * 8 <= 3600`. The one-macro and three-macro
+transfers in `todo.pcapng` and `macros.pcapng` have complete 33-byte packet
+goldens in `macro-one.bin` and `macro-three.bin`. Uploading the captured W macro
+and assigning it to Insert produced `w` on hardware. Macro numbers are list
+positions: deleting or reordering entries shifts existing key assignments.
+The GUI blocks sending an empty table because no official empty-table transfer
+was captured. See [macro-protocol.md](macro-protocol.md) for the event layout.
+
+### Remaining checks
+
+The current GUI covers remapping, macros, lighting, music, per-key RGB, battery,
+clock and sleep/response settings over 2.4G. No configuration path through
+Bluetooth is implemented. Persistence after a power cycle, remaps after
+switching to USB-C, a full remap reset, macro playback on FN, mouse macro
+events, toggle parameter 3, and the three settings flags still need controlled
+hardware checks. The [rollback procedure](hardware-test-rollback.md) requires
+recording the current state before each write; its November 8 state is a
+historical observation, not a readback of today's keyboard state.
