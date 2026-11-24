@@ -7,8 +7,17 @@ remap on the normal and FN layers, and per-key restore. Normal layer: `02 00
 <HID usage>`, or `02 <modifier bit> 00` for modifier keys. FN layer: blank slot
 `00 00 00 00`.
 
-Not verified: persistence after power cycle, behavior after switching to
-USB-C, and restoring all keys at once.
+On November 24, 2026, the user power-cycled this keyboard in 2.4G mode and
+confirmed that Insert still produced `w` through the stored macro. The screen
+still showed effect 1, five-minute sleep and response level 1. This verifies
+one power cycle for that macro assignment and those visible settings; other
+remaps and repeated cycles remain untested. The user then switched to USB-C
+with FN+4: Insert still produced `w`. After switching back to 2.4G with FN+~,
+Insert again produced `w`. This verifies this one macro assignment across
+those transport changes on this keyboard.
+
+Not verified: other remaps after switching to USB-C, and restoring all keys at
+once.
 
 Macro playback on Insert is verified on hardware: a captured W macro assigned
 to Insert produced `w` when the key was pressed.
@@ -187,9 +196,9 @@ was captured. See [macro-protocol.md](macro-protocol.md) for the event layout.
 
 The current GUI covers remapping, macros, lighting, music, per-key RGB, battery,
 clock and sleep/response settings over 2.4G. No configuration path through
-Bluetooth is implemented. Persistence after a power cycle, remaps after
-switching to USB-C, a full remap reset, macro playback on FN, mouse macro
+Bluetooth is implemented. Other remaps after a power cycle or transport
+switch, a full remap reset, macro playback on FN, mouse macro
 events, toggle parameter 3, and the three settings flags still need controlled
 hardware checks. The [rollback procedure](hardware-test-rollback.md) requires
-recording the current state before each write; its November 8 state is a
-historical observation, not a readback of today's keyboard state.
+recording the current state before each write; the local JSON files are not
+readback of the keyboard's full state.
